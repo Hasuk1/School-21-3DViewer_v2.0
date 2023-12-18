@@ -8,7 +8,8 @@ ifeq ($(OS), Darwin)
 else
 	OPEN_CMD := xdg-open
 endif
-TARGET := SmartCalc_v2.0
+TARGET := 3DViewer_v2.0
+PWD := $(shell pwd)
 
 all: tests gcov_report style install 
 
@@ -69,11 +70,17 @@ style:
 leaks: clean tests
 	@leaks -atExit -- ./test
 
-valgrind: clean tests
-	@CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./test
-
+valgrind:
+	@if [ "$(OS)" = "Darwin" ]; then \
+		docker build . -t 3d_viewer:2.0 -f ./Dockerfile; \
+		docker run --rm -it --entrypoint "" --name 3d_viewer_test 3d_viewer:2.0 make valgrind; \
+	elif [ "$(OS)" = "Linux" ]; then \
+		make clean && make tests; \
+		CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./test; \
+	fi
+	
 docker:
-	@docker build . -t smart_calc:2.0 -f ./Dockerfile
-	@docker run --rm -it --name set_test smart_calc:2.0
+	@docker build . -t 3d_viewer:2.0 -f ./Dockerfile
+	@docker run --rm -it --name 3d_viewer_test -v $(PWD):/home/3d_viewer 3d_viewer:2.0
 
 .PHONY: install open uninstall clean tests dvi dist gcov_report clang style

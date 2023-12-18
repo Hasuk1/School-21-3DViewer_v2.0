@@ -4,11 +4,9 @@ RUN apt-get update; \
     apt-get upgrade; \
     apt-get install -y gcc g++ libgtest-dev valgrind make googletest build-essential
     
-RUN mkdir /home/smart_calc
-WORKDIR /home/smart_calc
+RUN mkdir /home/3d_viewer
+WORKDIR /home/3d_viewer
 
-COPY . /home/smart_calc
+COPY . /home/3d_viewer
 
 USER root
-
-ENTRYPOINT ["make", "valgrind"]

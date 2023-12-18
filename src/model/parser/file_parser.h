@@ -1,13 +1,13 @@
 #ifndef FILE_PARSER_H_
 #define FILE_PARSER_H_
 
-#include "obj_data.h"
+#include <vector>
 
 namespace s21 {
   struct ObjData {
-    unsigned long number_of_vertices = 0;
+    std::size_t number_of_vertices = 0;
     std::vector<double> vertices;
-    unsigned long number_of_faces = 0;
+    std::size_t number_of_faces = 0;
     std::vector<double> faces;
   };
 
