@@ -22,10 +22,9 @@ install: uninstall
 	@echo "===> SmartCalc application installed <==="
 	@echo "Do you want to open application? [yes/no]"
 	@read -r ANSWER; \
-	if [ "$ANSWER" != "yes" ] && [ "$$ANSWER" != "y" ]; then \
-  	exit 0; \
+	if [ "$ANSWER" == "yes" ] || [ "$$ANSWER" == "y" ]; then \
+  	make open; \
 	fi
-	@make open
 
 open:
 	@echo "Opening application..."	
@@ -61,17 +60,22 @@ gcov_report: clean
 
 clang:
 	@echo "===> Formatting your code for Google Style <==="
-	@clang-format -i -style=GOOGLE $(SRC) model/*.h controller/*.h view/*.cc view/*.h view/*.ui
+	@clang-format -i -style=GOOGLE model/parser/*
 
 style:
 	@echo "===> Checking your code for Google Style <==="
-	@clang-format -n -style=GOOGLE $(SRC) model/*.h controller/*.h view/*.cc view/*.h view/*.ui
+	@clang-format -n -style=GOOGLE model/parser/*
 
-leaks: clean tests
-	@leaks -atExit -- ./test
+leaks:
+	@if [ "$(OS)" = "Darwin" ]; then \
+		make clean && make tests; \
+		leaks -atExit -- ./test; \
+	else \
+		echo "===> Use "make valgrind" to check for leaks <==="; \
+	fi
 
 valgrind:
-	@if [ "$(OS)" = "Darwin" ]; then \
+	if [ "$(OS)" = "Darwin" ]; then \
 		docker build . -t 3d_viewer:2.0 -f ./Dockerfile; \
 		docker run --rm -it --entrypoint "" --name 3d_viewer_test 3d_viewer:2.0 make valgrind; \
 	elif [ "$(OS)" = "Linux" ]; then \
@@ -82,5 +86,10 @@ valgrind:
 docker:
 	@docker build . -t 3d_viewer:2.0 -f ./Dockerfile
 	@docker run --rm -it --name 3d_viewer_test -v $(PWD):/home/3d_viewer 3d_viewer:2.0
+
+main:
+	$(CC) $(CHECKFLAGS) -std=c++17 main.cc model/parser/*.cc -o test
+	./test
+	rm -rf test
 
 .PHONY: install open uninstall clean tests dvi dist gcov_report clang style
