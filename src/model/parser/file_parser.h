@@ -2,6 +2,7 @@
 #define FILE_PARSER_H_
 
 #include <vector>
+#include <string>
 
 namespace s21 {
 class ObjComponents {
