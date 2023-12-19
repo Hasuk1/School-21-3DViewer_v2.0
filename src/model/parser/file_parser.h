@@ -1,21 +1,30 @@
 #ifndef FILE_PARSER_H_
 #define FILE_PARSER_H_
 
-#include <vector>
+#include <set>
 #include <string>
+#include <vector>
 
 namespace s21 {
-class ObjComponents {
-public:
-  virtual void Parse(const std::string& data) = 0;
-  virtual ~ObjComponents() = default;
-};
+enum Status { kOk, kError };
 
-class ObjVertex : public ObjComponents{
-  public:
-    void Parse(const std::string& data) override;
-  private:
-    std::vector<double> vertex_;
+class ObjParser {
+ public:
+  ObjParser() = default;
+  ~ObjParser() = default;
+
+  Status ParseFile(const std::string& file_name);
+  Status ParseLine(const std::string& line);
+  Status ParseVertex(const std::string& data);
+  Status ParseFace(const std::string& data);
+
+ private:
+  std::vector<double> verteces_;
+  std::size_t verteces_count_ = 0;
+  std::vector<unsigned int> faces_;
+  std::size_t faces_count_ = 0;
+
+  std::set<std::pair<unsigned int, unsigned int>> faces_set_;
 };
 // struct ObjData {
 //   std::size_t number_of_vertices = 0;

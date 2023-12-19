@@ -88,7 +88,7 @@ docker:
 	@docker run --rm -it --name 3d_viewer_test -v $(PWD):/home/3d_viewer 3d_viewer:2.0
 
 main:
-	$(CC) $(CHECKFLAGS) -std=c++17 main.cc model/parser/*.cc -o test
+	$(CC) $(CHECKFLAGS) -std=c++17 main.cc  -o test
 	./test
 	rm -rf test
 
