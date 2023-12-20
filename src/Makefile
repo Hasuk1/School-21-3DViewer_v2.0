@@ -61,6 +61,7 @@ gcov_report: clean
 clang:
 	@echo "===> Formatting your code for Google Style <==="
 	@clang-format -i -style=GOOGLE model/parser/*
+	clang-format -i -style=GOOGLE main.cc
 
 style:
 	@echo "===> Checking your code for Google Style <==="
@@ -88,8 +89,8 @@ docker:
 	@docker run --rm -it --name 3d_viewer_test -v $(PWD):/home/3d_viewer 3d_viewer:2.0
 
 main:
-	$(CC) $(CHECKFLAGS) -std=c++17 main.cc  -o test
-	./test
+	g++ -std=c++17 main.cc model/parser/file_parser.cc  -o test
+	clear && ./test
 	rm -rf test
 
 .PHONY: install open uninstall clean tests dvi dist gcov_report clang style

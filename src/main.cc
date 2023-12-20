@@ -1,9 +1,10 @@
-// #include "model/parser/file_parser.h"
-
 #include <iostream>
 #include <set>
 
-int main() {
+#include "model/parser/file_parser.h"
+
+int main(int argc, char* argv[]) {
+  if (argc == 2) {
     std::pair<unsigned int, unsigned int> pr1(1, 2);
     std::pair<unsigned int, unsigned int> pr3(4, 1);
     std::pair<unsigned int, unsigned int> pr4(3, 2);
@@ -20,12 +21,20 @@ int main() {
     kek.insert(pr6);
 
     if (kek.find(pr2) == kek.end() && kek.find(pr2inv) == kek.end()) {
-        kek.insert(pr2);
+      kek.insert(pr2);
     }
 
     for (const auto& x : kek) {
-        std::cout << "(" << x.first << ", " << x.second << ")\n";
+      std::cout << "(" << x.first << ", " << x.second << ")\n";
     }
-
-    return 0;
+  } else {
+    s21::ObjParser kek;
+    std::string file_name = "cube.obj";
+    if (kek.ParseFile(file_name) == s21::kOk) std::cout << "molodec\n";
+    // std::vector<double> verteces_ = kek.GetVert();
+    // for (const auto& x : verteces_){
+    //     std::cout << "v " << x << ", " << x << ", " << x <<"\n";
+    // }
+  }
+  return 0;
 }
