@@ -1,10 +1,10 @@
-#include "my_ogl_widget.h"
+#include "OpenGL_widget.h"
 
 my_ogl_widget::my_ogl_widget(QWidget *parent) : QOpenGLWidget{parent} {}
 
 my_ogl_widget::~my_ogl_widget() {
-    verteces_.clear();
-    edges_.clear();
+  verteces_.clear();
+  edges_.clear();
 }
 
 void my_ogl_widget::initializeGL() {
@@ -37,33 +37,38 @@ void my_ogl_widget::paintGL() {
 }
 
 void my_ogl_widget::parse_file(char *filename) {
-//  memory_free(&this->data);
-//  data = {0, NULL, 0, NULL};
+  //  memory_free(&this->data);
+  //  data = {0, NULL, 0, NULL};
   if (filename) {
-      s21::ObjParser kek;
-      std::string file_name = filename;
-    if (kek.ParseFile(filename) == s21::kOk) {
-        verteces_ = kek.GetVertex();
-        edges_ = kek.GetEdges();
+    s21::ObjParser kek;
+    std::string file_name = filename;
+    s21::Status status = kek.ParseFile(filename);
+    if (status == s21::kOk) {
+      verteces_ = kek.GetVertex();
+      edges_ = kek.GetEdges();
       set_normalize_coef();
       update();
-    } else {
-//      closeObject();
+    } else if (status == s21::kErrorIncorrectFile) {
+      //      closeObject();
       QMessageBox::information(this, "ERROR", "Enter a correctly obj-file");
+    } else if (status == s21::kErrorFileMissing) {
+      //      closeObject();
+      QMessageBox::information(this, "ERROR",
+                               "Enter a obj-file with coorect data");
     }
   }
 }
 
-//void my_ogl_widget::closeObject() {
-//  memory_free(&this->data);
-//  data = {0, NULL, 0, NULL};
-//  set_normalize_coef();
-//  update();
-//}
+// void my_ogl_widget::closeObject() {
+//   memory_free(&this->data);
+//   data = {0, NULL, 0, NULL};
+//   set_normalize_coef();
+//   update();
+// }
 
 void my_ogl_widget::set_normalize_coef() {
   normalize_coef = -10;
-  for (auto& x : verteces_) {
+  for (auto &x : verteces_) {
     if (abs(x) > normalize_coef) {
       normalize_coef = abs(x);
     }
@@ -95,8 +100,8 @@ void my_ogl_widget::build_points() {
   }
 }
 
-//void my_ogl_widget::mouseMoveEvent(QMouseEvent *event) {
-//  new_pos = QPoint(event->globalPosition().toPoint() - current_pos);
+// void my_ogl_widget::mouseMoveEvent(QMouseEvent *event) {
+//   new_pos = QPoint(event->globalPosition().toPoint() - current_pos);
 
 //  if (event->buttons() & Qt::RightButton) {
 //    move_X(&this->data, new_pos.x() * this->normalize_coef / 5120);
@@ -109,17 +114,17 @@ void my_ogl_widget::build_points() {
 //  }
 //}
 
-//void my_ogl_widget::wheelEvent(QWheelEvent *event) {
-//  QPoint numDegrees = event->angleDelta() / 120;
-//  double step = normalize_coef / 10;
-//  double scale_tmp = scale_val;
-//  if ((int)(scale_val + numDegrees.y() * step) > 0) {
-//    scale_val += numDegrees.y() * step;
-//    scale(&this->data, scale_val / scale_tmp);
-//    update();
-//  }
-//}
+// void my_ogl_widget::wheelEvent(QWheelEvent *event) {
+//   QPoint numDegrees = event->angleDelta() / 120;
+//   double step = normalize_coef / 10;
+//   double scale_tmp = scale_val;
+//   if ((int)(scale_val + numDegrees.y() * step) > 0) {
+//     scale_val += numDegrees.y() * step;
+//     scale(&this->data, scale_val / scale_tmp);
+//     update();
+//   }
+// }
 
-//void my_ogl_widget::mousePressEvent(QMouseEvent *event) {
-//  current_pos = event->globalPosition().toPoint();
-//}
+// void my_ogl_widget::mousePressEvent(QMouseEvent *event) {
+//   current_pos = event->globalPosition().toPoint();
+// }

@@ -20,6 +20,7 @@ class ObjParser {
 
  private:
   void Print();
+  void ClearData();
 
   Status ParseLine(const std::string& line);
   Status ParseVertex(const std::string& data);

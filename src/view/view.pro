@@ -10,13 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     ../model/parser/file_parser.cc \
-    main.cpp \
-    my_ogl_widget.cpp \
+    OpenGL_widget.cc \
+    main.cc \
     viewer.cc
 
 HEADERS += \
     ../model/parser/file_parser.h \
-    my_ogl_widget.h \
+    OpenGL_widget.h \
     viewer.h
 
 FORMS += \

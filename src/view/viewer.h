@@ -4,18 +4,24 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class Viewer; }
+namespace Ui {
+class Viewer;
+}
 QT_END_NAMESPACE
 
-class Viewer : public QMainWindow
-{
-    Q_OBJECT
+class Viewer : public QMainWindow {
+  Q_OBJECT
 
-public:
-    Viewer(QWidget *parent = nullptr);
-    ~Viewer();
+ public:
+  Viewer(QWidget *parent = nullptr);
+  ~Viewer();
 
-private:
-    Ui::Viewer *ui;
+ private slots:
+  void on_open_obj_file_clicked();
+
+  void on_render_obj_file_clicked();
+
+ private:
+  Ui::Viewer *ui;
 };
-#endif // VIEWER_H
+#endif  // VIEWER_H

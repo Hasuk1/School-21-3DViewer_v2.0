@@ -1,5 +1,5 @@
-#ifndef MY_OGL_WIDGET_H
-#define MY_OGL_WIDGET_H
+#ifndef OPENGL_WIDGET_H
+#define OPENGL_WIDGET_H
 #define GL_SILENCE_DEPRECATION
 
 #include <OpenGL/gl.h>
@@ -13,6 +13,7 @@
 #include <QWidget>
 #include <QtOpenGL>
 #include <iostream>
+
 #include "../model/parser/file_parser.h"
 
 class my_ogl_widget : public QOpenGLWidget, protected QOpenGLFunctions {
@@ -33,9 +34,9 @@ class my_ogl_widget : public QOpenGLWidget, protected QOpenGLFunctions {
   double l_r = 1, l_g = 100, l_b = 1;
   double bg_r = 0, bg_g = 0, bg_b = 0;
   GLfloat normalize_coef;
-//  void mousePressEvent(QMouseEvent *event) override;
-//  void mouseMoveEvent(QMouseEvent *event) override;
-//  void wheelEvent(QWheelEvent *event) override;
+  //  void mousePressEvent(QMouseEvent *event) override;
+  //  void mouseMoveEvent(QMouseEvent *event) override;
+  //  void wheelEvent(QWheelEvent *event) override;
   void parse_file(char *filename);
   void closeObject();
   void initializeGL() override;
@@ -51,9 +52,9 @@ class my_ogl_widget : public QOpenGLWidget, protected QOpenGLFunctions {
   void build_points();
 
   std::vector<double> verteces_;
-    std::size_t verteces_count_ = 0;
-    std::vector<unsigned int> edges_;
-    std::size_t edges_count_ = 0;
+  std::size_t verteces_count_ = 0;
+  std::vector<unsigned int> edges_;
+  std::size_t edges_count_ = 0;
 };
 
-#endif  // MY_OGL_WIDGET_H
+#endif  // OPENGL_WIDGET_H
