@@ -1,33 +1,26 @@
 #include "file_parser.h"
 
-#include <clocale>
 #include <fstream>
-#include <iostream>
-#include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
 
 namespace s21 {
 Status ObjParser::ParseFile(const std::string& file_name) {
-  std::setlocale(LC_ALL, "en_US.UTF-8");
   ClearData();
   std::ifstream file(file_name);
-  if (!file.is_open()) {
-    std::cerr << "Unable to open file: " << file_name << "\n";
-    return kErrorFileMissing;
-  }
+  if (!file.is_open()) return kErrorFileMissing;
   std::string current_line;
   Status status = kOk;
-  while (std::getline(file, current_line)) {
+  while (std::getline(file, current_line) && status == kOk) {
     status = ParseLine(current_line);
-    if (status == kErrorIncorrectFile) break;
   }
-  if (status == kOk) TransferUniqueVector();
-    else ClearData();
+  if (status == kOk)
+    TransferUniqueVector();
+  else
+    ClearData();
   file.close();
-  Print();
-  return status;
+  return verteces_.empty() || edges_.empty() ? kErrorFileEmpty : status;
 }
 
 Status ObjParser::ParseLine(const std::string& line) {
@@ -69,13 +62,16 @@ Status ObjParser::ParseFace(const std::string& data) {
   bool is_first_index = true;
   std::vector<unsigned int> faces_buff;
   while (iss >> index_str) {
-    index = std::stoi(index_str);
-    if (index>verteces_.size()) return kErrorFileMissing;
+    try {
+      index = std::stoi(index_str);
+    } catch (const std::out_of_range& e) {
+      return kErrorFileMissing;
+    }
+    if (index > static_cast<long>(verteces_.size())) return kErrorFileMissing;
     if (index < 0)
       index += verteces_count_;
     else
       index -= 1;
-
     if (is_first_index) {
       first_index = index;
       faces_buff.push_back(index);
@@ -86,7 +82,6 @@ Status ObjParser::ParseFace(const std::string& data) {
     }
   }
   faces_buff.push_back(first_index);
-  // edges_count_++;
   InsertUniqueVector(faces_buff);
   return kOk;
 }
@@ -117,20 +112,5 @@ void ObjParser::ClearData() {
   verteces_.clear();
   edges_.clear();
   verteces_count_ = edges_count_ = 0;
-}
-
-void ObjParser::Print() {
-  // for (const auto& coord : verteces_) {
-  //   std::cout << coord << "-> ";
-  // }
-  std::cout << "verteces_count_ = " << verteces_count_ << "\n";
-  // for (const auto& indx : edges_) {
-  //   std::cout << "f " << indx << ", ";
-  // }
-  // std::cout << "\n";
-  std::cout << "edges_count_ = " << edges_count_ << "\n";
-
-  /*verteces_count_ = 1000000
-edges_count_ = 1669317*/
 }
 }  // namespace s21

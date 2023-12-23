@@ -55,6 +55,10 @@ void my_ogl_widget::parse_file(char *filename) {
       //      closeObject();
       QMessageBox::information(this, "ERROR",
                                "Enter a obj-file with coorect data");
+    } else if (status == s21::kErrorFileEmpty) {
+      //      closeObject();
+      QMessageBox::information(this, "ERROR",
+                               "Enter a obj-file with some data");
     }
   }
 }

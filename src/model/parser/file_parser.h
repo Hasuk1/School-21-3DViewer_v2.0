@@ -6,7 +6,7 @@
 #include <vector>
 
 namespace s21 {
-enum Status { kOk, kErrorFileMissing, kErrorIncorrectFile };
+enum Status { kOk, kErrorFileMissing, kErrorIncorrectFile, kErrorFileEmpty };
 
 class ObjParser {
  public:

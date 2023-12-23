@@ -2637,7 +2637,7 @@ color: white;
   <customwidget>
    <class>my_ogl_widget</class>
    <extends>QWidget</extends>
-   <header>my_ogl_widget.h</header>
+   <header>OpenGL_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
