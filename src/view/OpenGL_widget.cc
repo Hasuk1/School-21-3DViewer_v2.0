@@ -1,85 +1,96 @@
 #include "OpenGL_widget.h"
 
-my_ogl_widget::my_ogl_widget(QWidget *parent) : QOpenGLWidget{parent} {}
+MyOpenGLWidget::MyOpenGLWidget(QWidget *parent) : QOpenGLWidget{parent} {}
 
-my_ogl_widget::~my_ogl_widget() {
+MyOpenGLWidget::~MyOpenGLWidget() {
   verteces_.clear();
   edges_.clear();
 }
 
-void my_ogl_widget::initializeGL() {
+void MyOpenGLWidget::initializeGL() {
   initializeOpenGLFunctions();
   glEnable(GL_DEPTH_TEST);
 }
 
-void my_ogl_widget::paintGL() {
+void MyOpenGLWidget::paintGL() {
   glClearColor(bg_r, bg_g, bg_b, 1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glVertexPointer(3, GL_DOUBLE, 0, verteces_.data());
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  if (this->projection_type == 0) {  // Перспективная проекция
-    glFrustum(-1 * normalize_coef, 1 * normalize_coef, -1 * normalize_coef,
-              1 * normalize_coef, normalize_coef, 1000 * normalize_coef);
-    glTranslatef(0, 0, -2 * normalize_coef);
+  if (this->projection_type == 0) {
+    glOrtho(-1 * normalize_coef_, 1 * normalize_coef_, -1 * normalize_coef_,
+            1 * normalize_coef_, -1 * normalize_coef_, 1000 * normalize_coef_);
+    glTranslatef(0, -normalize_coef_ / 2, 0);
+  } else {
+    glFrustum(-1 * normalize_coef_, 1 * normalize_coef_, -1 * normalize_coef_,
+              1 * normalize_coef_, normalize_coef_, 1000 * normalize_coef_);
+    glTranslatef(0, 0, -2 * normalize_coef_);
     glRotatef(30, 1, 0, 0);
-  } else {  // Ортогональная проекция
-    glOrtho(-1 * normalize_coef, 1 * normalize_coef, -1 * normalize_coef,
-            1 * normalize_coef, -1 * normalize_coef, 1000 * normalize_coef);
-    glTranslatef(0, -normalize_coef / 2, 0);
   }
   glEnableClientState(GL_VERTEX_ARRAY);
-  if (this->v_type != 0) build_points();
-  build_lines();
+  if (this->v_type != 0) BuildPoints();
+  BuildLines();
   glDisableClientState(GL_VERTEX_ARRAY);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 }
 
-void my_ogl_widget::parse_file(char *filename) {
-  //  memory_free(&this->data);
-  //  data = {0, NULL, 0, NULL};
-  if (filename) {
-    s21::ObjParser kek;
-    std::string file_name = filename;
-    s21::Status status = kek.ParseFile(filename);
-    if (status == s21::kOk) {
-      verteces_ = kek.GetVertex();
-      edges_ = kek.GetEdges();
-      set_normalize_coef();
-      update();
-    } else if (status == s21::kErrorIncorrectFile) {
-      //      closeObject();
-      QMessageBox::information(this, "ERROR", "Enter a correctly obj-file");
-    } else if (status == s21::kErrorFileMissing) {
-      //      closeObject();
-      QMessageBox::information(this, "ERROR",
-                               "Enter a obj-file with coorect data");
-    } else if (status == s21::kErrorFileEmpty) {
-      //      closeObject();
-      QMessageBox::information(this, "ERROR",
-                               "Enter a obj-file with some data");
-    }
+void MyOpenGLWidget::ParseFile(QString path_to_file) {
+  verteces_.clear();
+  edges_.clear();
+  s21::ObjParser &parser = s21::ObjParser::SingleParser();
+  s21::Status status = parser.ParseFile(path_to_file.toStdString());
+  QString error_str;
+  if (status == s21::kOk) {
+    verteces_ = parser.GetVertex();
+    edges_ = parser.GetEdges();
+    parser.ClearData();
+    SetNormalizeCoef();
+    update();
+  } else if (status == s21::kErrorIncorrectFile) {
+    error_str = "Enter a correctly obj-file";
+  } else if (status == s21::kErrorFileMissing) {
+    error_str = "Enter a obj-file with coorect data";
+  } else if (status == s21::kErrorFileEmpty) {
+    error_str = "Enter a obj-file with some data";
+  }
+  if (status != s21::kOk) {
+    CloseObject();
+    QMessageBox::information(this, "ERROR", error_str);
   }
 }
 
-// void my_ogl_widget::closeObject() {
-//   memory_free(&this->data);
-//   data = {0, NULL, 0, NULL};
-//   set_normalize_coef();
-//   update();
-// }
-
-void my_ogl_widget::set_normalize_coef() {
-  normalize_coef = -10;
-  for (auto &x : verteces_) {
-    if (abs(x) > normalize_coef) {
-      normalize_coef = abs(x);
-    }
-  }
+void MyOpenGLWidget::CloseObject() {
+  verteces_.clear();
+  edges_.clear();
+  SetNormalizeCoef();
+  update();
 }
 
-void my_ogl_widget::build_lines() {
+QString MyOpenGLWidget::GetVertexAmount() {
+  return QString::number(verteces_.size() / 3);
+}
+QString MyOpenGLWidget::GetEdgeAmount() {
+  return QString::number(edges_.size() / 2);
+}
+
+void MyOpenGLWidget::SetNormalizeCoef() {
+  GLfloat x_max = -10, y_max = -10, z_max = -10;
+  for (size_t i = 0; i < verteces_.size(); i += 3) {
+    for (size_t j = 0; j < 3; ++j) {
+      if (j == 0 && abs(verteces_[i + j]) > x_max)
+        x_max = abs(verteces_[i + j]);
+      if (j == 1 && abs(verteces_[i + j]) > y_max)
+        y_max = abs(verteces_[i + j]);
+      if (j == 2 && abs(verteces_[i + j]) > z_max)
+        z_max = abs(verteces_[i + j]);
+    }
+  }
+  normalize_coef_ = (x_max + y_max + z_max) / 3;
+}
+
+void MyOpenGLWidget::BuildLines() {
   if (this->l_type == 1) {
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0x00FF);
@@ -92,7 +103,7 @@ void my_ogl_widget::build_lines() {
   }
 }
 
-void my_ogl_widget::build_points() {
+void MyOpenGLWidget::BuildPoints() {
   if (this->v_type == 1) {
     glEnable(GL_POINT_SMOOTH);
   }
@@ -104,7 +115,7 @@ void my_ogl_widget::build_points() {
   }
 }
 
-// void my_ogl_widget::mouseMoveEvent(QMouseEvent *event) {
+// void MyOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
 //   new_pos = QPoint(event->globalPosition().toPoint() - current_pos);
 
 //  if (event->buttons() & Qt::RightButton) {
@@ -118,7 +129,7 @@ void my_ogl_widget::build_points() {
 //  }
 //}
 
-// void my_ogl_widget::wheelEvent(QWheelEvent *event) {
+// void MyOpenGLWidget::wheelEvent(QWheelEvent *event) {
 //   QPoint numDegrees = event->angleDelta() / 120;
 //   double step = normalize_coef / 10;
 //   double scale_tmp = scale_val;
@@ -129,6 +140,6 @@ void my_ogl_widget::build_points() {
 //   }
 // }
 
-// void my_ogl_widget::mousePressEvent(QMouseEvent *event) {
+// void MyOpenGLWidget::mousePressEvent(QMouseEvent *event) {
 //   current_pos = event->globalPosition().toPoint();
 // }

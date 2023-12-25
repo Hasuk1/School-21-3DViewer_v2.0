@@ -10,18 +10,15 @@ enum Status { kOk, kErrorFileMissing, kErrorIncorrectFile, kErrorFileEmpty };
 
 class ObjParser {
  public:
-  ObjParser() = default;
-  ~ObjParser() = default;
-
+  static ObjParser& SingleParser();
   Status ParseFile(const std::string& file_name);
-
+  void ClearData();
   std::vector<double> GetVertex() { return verteces_; }
   std::vector<unsigned int> GetEdges() { return edges_; }
 
  private:
-  void Print();
-  void ClearData();
-
+  ObjParser() = default;
+  ~ObjParser() = default;
   Status ParseLine(const std::string& line);
   Status ParseVertex(const std::string& data);
   Status ParseFace(const std::string& data);
@@ -29,10 +26,8 @@ class ObjParser {
   void TransferUniqueVector();
 
   std::vector<double> verteces_;
-  std::size_t verteces_count_ = 0;
   std::vector<unsigned int> edges_;
-  std::size_t edges_count_ = 0;
-
+  std::size_t verteces_count_ = 0;
   std::set<std::pair<unsigned int, unsigned int>> vectors_set_;
 };
 

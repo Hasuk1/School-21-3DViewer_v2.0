@@ -16,12 +16,11 @@ class Viewer : public QMainWindow {
   Viewer(QWidget *parent = nullptr);
   ~Viewer();
 
- private slots:
-  void on_open_obj_file_clicked();
-
-  void on_render_obj_file_clicked();
-
  private:
-  Ui::Viewer *ui;
+  Ui::Viewer *ui_;
+
+private slots:
+ void on_open_obj_file_clicked();
+ void on_render_obj_file_clicked();
 };
 #endif  // VIEWER_H

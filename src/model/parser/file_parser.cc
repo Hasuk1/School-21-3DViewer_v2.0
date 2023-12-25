@@ -6,6 +6,11 @@
 #include <vector>
 
 namespace s21 {
+ObjParser& ObjParser::SingleParser() {
+  static ObjParser TheObjParser;
+  return TheObjParser;
+}
+
 Status ObjParser::ParseFile(const std::string& file_name) {
   ClearData();
   std::ifstream file(file_name);
@@ -93,10 +98,8 @@ void ObjParser::InsertUniqueVector(const std::vector<unsigned int>& data) {
     std::pair<unsigned int, unsigned int> vector(first, second);
     std::pair<unsigned int, unsigned int> inverse_vector(second, first);
     if (vectors_set_.find(vector) == vectors_set_.end() &&
-        vectors_set_.find(inverse_vector) == vectors_set_.end()) {
+        vectors_set_.find(inverse_vector) == vectors_set_.end())
       vectors_set_.insert(vector);
-      edges_count_++;
-    }
   }
 }
 
@@ -109,8 +112,10 @@ void ObjParser::TransferUniqueVector() {
 }
 
 void ObjParser::ClearData() {
+  vectors_set_.clear();
   verteces_.clear();
   edges_.clear();
-  verteces_count_ = edges_count_ = 0;
+  verteces_count_ = 0;
 }
+
 }  // namespace s21

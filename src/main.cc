@@ -28,13 +28,13 @@ int main(int argc, char* argv[]) {
       std::cout << "(" << x.first << ", " << x.second << ")\n";
     }
   } else {
-    s21::ObjParser kek;
+    s21::ObjParser& parser = s21::ObjParser::SingleParser();
     std::string file_name = "cube.obj";
-    if (kek.ParseFile(file_name) == s21::kOk) std::cout << "molodec\n";
-    // std::vector<double> verteces_ = kek.GetVert();
-    // for (const auto& x : verteces_){
-    //     std::cout << "v " << x << ", " << x << ", " << x <<"\n";
-    // }
+    if (parser.ParseFile(file_name) == s21::kOk) std::cout << "molodec\n";
+    std::vector<double> verteces_ = parser.GetVertex();
+    for (const auto& x : verteces_) {
+      std::cout << x << " ";
+    }
   }
   return 0;
 }
