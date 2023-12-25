@@ -1,5 +1,5 @@
-#ifndef FILE_PARSER_H_
-#define FILE_PARSER_H_
+#ifndef CPP4_3DVIEWER_V2_SRC_FILE_PARSER_H_
+#define CPP4_3DVIEWER_V2_SRC_FILE_PARSER_H_
 
 #include <set>
 #include <string>
@@ -32,4 +32,4 @@ class ObjParser {
 };
 
 }  // namespace s21
-#endif  // FILE_PARSER_H_
+#endif  // CPP4_3DVIEWER_V2_SRC_FILE_PARSER_H_

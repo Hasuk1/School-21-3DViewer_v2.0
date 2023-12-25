@@ -1,5 +1,5 @@
-#ifndef OPENGL_WIDGET_H
-#define OPENGL_WIDGET_H
+#ifndef CPP4_3DVIEWER_V2_SRC_OPENGL_WIDGET_H_
+#define CPP4_3DVIEWER_V2_SRC_OPENGL_WIDGET_H_
 #define GL_SILENCE_DEPRECATION
 
 #include <OpenGL/gl.h>
@@ -60,4 +60,4 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   // QPoint new_pos_;
 };
 
-#endif  // OPENGL_WIDGET_H
+#endif  // CPP4_3DVIEWER_V2_SRC_OPENGL_WIDGET_H
