@@ -1,5 +1,5 @@
-#ifndef VIEWER_H
-#define VIEWER_H
+#ifndef CPP4_3DVIEWER_V2_SRC_VIEWER_H_
+#define CPP4_3DVIEWER_V2_SRC_VIEWER_H_
 
 #include <QMainWindow>
 
@@ -19,8 +19,8 @@ class Viewer : public QMainWindow {
  private:
   Ui::Viewer *ui_;
 
-private slots:
- void on_open_obj_file_clicked();
- void on_render_obj_file_clicked();
+ private slots:
+  void on_open_obj_file_clicked();
+  void on_render_obj_file_clicked();
 };
-#endif  // VIEWER_H
+#endif  // CPP4_3DVIEWER_V2_SRC_VIEWER_H_

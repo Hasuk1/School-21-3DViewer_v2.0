@@ -20,13 +20,23 @@ Status ObjParser::ParseFile(const std::string& file_name) {
   while (std::getline(file, current_line) && status == kOk) {
     status = ParseLine(current_line);
   }
-  if (status == kOk)
-    TransferUniqueVector();
-  else
-    ClearData();
+  vectors_set_.clear();
+  status = verteces_.empty() || edges_.empty() ? kErrorFileEmpty : status;
+  if (status != kOk) ClearData();
   file.close();
-  return verteces_.empty() || edges_.empty() ? kErrorFileEmpty : status;
+  return status;
 }
+
+void ObjParser::ClearData() {
+  vectors_set_.clear();
+  verteces_.clear();
+  edges_.clear();
+  verteces_count_ = 0;
+}
+
+std::vector<double> ObjParser::GetVertex() { return verteces_; }
+
+std::vector<unsigned> ObjParser::GetEdges() { return edges_; }
 
 Status ObjParser::ParseLine(const std::string& line) {
   Status status = kOk;
@@ -70,9 +80,9 @@ Status ObjParser::ParseFace(const std::string& data) {
     try {
       index = std::stoi(index_str);
     } catch (const std::out_of_range& e) {
-      return kErrorFileMissing;
+      return kErrorIncorrectFile;
     }
-    if (index > static_cast<long>(verteces_.size())) return kErrorFileMissing;
+    if (index > static_cast<long>(verteces_.size())) return kErrorIncorrectFile;
     if (index < 0)
       index += verteces_count_;
     else
@@ -91,31 +101,17 @@ Status ObjParser::ParseFace(const std::string& data) {
   return kOk;
 }
 
-void ObjParser::InsertUniqueVector(const std::vector<unsigned int>& data) {
+void ObjParser::InsertUniqueVector(const std::vector<unsigned>& data) {
   for (auto it = data.begin(); it != data.end() && data.size() % 2 == 0;
        it += 2) {
-    unsigned int first = *it, second = *(it + 1);
-    std::pair<unsigned int, unsigned int> vector(first, second);
-    std::pair<unsigned int, unsigned int> inverse_vector(second, first);
+    std::pair<unsigned, unsigned> vector(*it, *(it + 1));
+    std::pair<unsigned, unsigned> inverse_vector(*(it + 1), *it);
     if (vectors_set_.find(vector) == vectors_set_.end() &&
-        vectors_set_.find(inverse_vector) == vectors_set_.end())
+        vectors_set_.find(inverse_vector) == vectors_set_.end()) {
+      edges_.push_back(*it);
+      edges_.push_back(*(it + 1));
       vectors_set_.insert(vector);
+    }
   }
 }
-
-void ObjParser::TransferUniqueVector() {
-  for (const auto& pair : vectors_set_) {
-    edges_.push_back(pair.first);
-    edges_.push_back(pair.second);
-  }
-  vectors_set_.clear();
-}
-
-void ObjParser::ClearData() {
-  vectors_set_.clear();
-  verteces_.clear();
-  edges_.clear();
-  verteces_count_ = 0;
-}
-
 }  // namespace s21
