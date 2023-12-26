@@ -13,8 +13,8 @@ class ObjParser {
   static ObjParser& SingleParser();
   Status ParseFile(const std::string& file_name);
   void ClearData();
-  std::vector<double> GetVertex() { return verteces_; }
-  std::vector<unsigned int> GetEdges() { return edges_; }
+  std::vector<double> GetVertex();
+  std::vector<unsigned> GetEdges();
 
  private:
   ObjParser() = default;
@@ -22,13 +22,13 @@ class ObjParser {
   Status ParseLine(const std::string& line);
   Status ParseVertex(const std::string& data);
   Status ParseFace(const std::string& data);
-  void InsertUniqueVector(const std::vector<unsigned int>& data);
+  void InsertUniqueVector(const std::vector<unsigned>& data);
   void TransferUniqueVector();
 
   std::vector<double> verteces_;
-  std::vector<unsigned int> edges_;
+  std::vector<unsigned> edges_;
   std::size_t verteces_count_ = 0;
-  std::set<std::pair<unsigned int, unsigned int>> vectors_set_;
+  std::set<std::pair<unsigned, unsigned>> vectors_set_;
 };
 
 }  // namespace s21

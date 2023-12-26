@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 7.0.0, 2023-12-23T20:44:19. -->
+<!-- Written by QtCreator 7.0.0, 2023-12-25T19:09:28. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -244,7 +244,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/Users/perlabru/my-project/School-21-3DViewer_v2.0/src/build-view-Desktop_x86_darwin_generic_mach_o_64bit-Debug/view.app/Contents/MacOS</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/Users/perlabru/my-project/School-21-3DViewer_v2.0/src/build-view-Desktop_x86_darwin_generic_mach_o_64bit-Debug/3DViewer_v2.0.app/Contents/MacOS</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
