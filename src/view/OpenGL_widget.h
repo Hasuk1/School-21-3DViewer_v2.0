@@ -14,7 +14,7 @@
 #include <QtOpenGL>
 #include <iostream>
 
-#include "../model/parser/file_parser.h"
+#include "./../controller/3d_viewer_controller.h"
 
 class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT
@@ -46,15 +46,16 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
 
  private:
   ~MyOpenGLWidget() override;
-  void SetNormalizeCoef();
   void CloseObject();
 
   void BuildLines();
   void BuildPoints();
 
   std::vector<double> verteces_;
-  std::vector<unsigned int> edges_;
+  std::vector<unsigned> edges_;
   GLfloat normalize_coef_;
+
+  s21::ObjController &controller_ = s21::ObjController::SinlgeObjController();
 
   // QPoint current_pos_;
   // QPoint new_pos_;

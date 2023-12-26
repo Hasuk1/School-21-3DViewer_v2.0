@@ -15,6 +15,7 @@ class ObjParser {
   void ClearData();
   std::vector<double> GetVertex();
   std::vector<unsigned> GetEdges();
+  float GetNormalizeCoef();
 
  private:
   ObjParser() = default;
@@ -29,7 +30,9 @@ class ObjParser {
   std::vector<unsigned> edges_;
   std::size_t verteces_count_ = 0;
   std::set<std::pair<unsigned, unsigned>> vectors_set_;
-};
 
+  float x_coef_ = -10, y_coef_ = -10, z_coef_ = -10;
+};
 }  // namespace s21
+
 #endif  // CPP4_3DVIEWER_V2_SRC_FILE_PARSER_H_

@@ -32,11 +32,16 @@ void ObjParser::ClearData() {
   verteces_.clear();
   edges_.clear();
   verteces_count_ = 0;
+  x_coef_ = y_coef_ = z_coef_ = -10;
 }
 
 std::vector<double> ObjParser::GetVertex() { return verteces_; }
 
 std::vector<unsigned> ObjParser::GetEdges() { return edges_; }
+
+float ObjParser::GetNormalizeCoef() {
+  return (x_coef_ + y_coef_ + z_coef_) / 3;
+}
 
 Status ObjParser::ParseLine(const std::string& line) {
   Status status = kOk;
@@ -62,6 +67,9 @@ Status ObjParser::ParseVertex(const std::string& data) {
     verteces_.push_back(x);
     verteces_.push_back(y);
     verteces_.push_back(z);
+    if (abs(x) > x_coef_) x_coef_ = abs(x);
+    if (abs(y) > y_coef_) y_coef_ = abs(y);
+    if (abs(z) > z_coef_) z_coef_ = abs(z);
     ++verteces_count_;
   } else {
     ClearData();

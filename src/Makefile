@@ -60,12 +60,12 @@ gcov_report: clean
 
 clang:
 	@echo "===> Formatting your code for Google Style <==="
-	@clang-format -i -style=GOOGLE model/parser/* view/*.cc view/*.h view/*.ui
+	@clang-format -i -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui controller/*.h
 	@clang-format -i -style=GOOGLE main.cc
 
 style:
 	@echo "===> Checking your code for Google Style <==="
-	@clang-format -n -style=GOOGLE model/parser/* view/*.cc view/*.h view/*.ui
+	@clang-format -n -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui
 
 leaks:
 	@if [ "$(OS)" = "Darwin" ]; then \

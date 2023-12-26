@@ -8,12 +8,15 @@ TARGET = 3DViewer_v2.0
 
 SOURCES += \
     ../model/parser/file_parser.cc \
+    ../model/transform/transform.cc \
     OpenGL_widget.cc \
     main.cc \
     viewer.cc
 
 HEADERS += \
+    ../controller/3d_viewer_controller.h \
     ../model/parser/file_parser.h \
+    ../model/transform/transform.h \
     OpenGL_widget.h \
     viewer.h
 

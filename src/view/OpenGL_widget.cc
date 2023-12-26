@@ -39,14 +39,13 @@ void MyOpenGLWidget::paintGL() {
 void MyOpenGLWidget::ParseFile(QString path_to_file) {
   verteces_.clear();
   edges_.clear();
-  s21::ObjParser &parser = s21::ObjParser::SingleParser();
-  s21::Status status = parser.ParseFile(path_to_file.toStdString());
+  s21::Status status = controller_.ParseObjFile(path_to_file.toStdString());
   QString error_str;
   if (status == s21::kOk) {
-    verteces_ = parser.GetVertex();
-    edges_ = parser.GetEdges();
-    parser.ClearData();
-    SetNormalizeCoef();
+    verteces_ = controller_.GetObjVertex();
+    edges_ = controller_.GetObjEdges();
+    normalize_coef_ = controller_.GetObjNormalizeCoef();
+    controller_.ClearObjData();
     update();
   } else if (status == s21::kErrorIncorrectFile) {
     error_str = "Enter a correctly obj-file";
@@ -64,7 +63,7 @@ void MyOpenGLWidget::ParseFile(QString path_to_file) {
 void MyOpenGLWidget::CloseObject() {
   verteces_.clear();
   edges_.clear();
-  SetNormalizeCoef();
+  normalize_coef_ = -10;
   update();
 }
 
@@ -73,21 +72,6 @@ QString MyOpenGLWidget::GetVertexAmount() {
 }
 QString MyOpenGLWidget::GetEdgeAmount() {
   return QString::number(edges_.size() / 2);
-}
-
-void MyOpenGLWidget::SetNormalizeCoef() {
-  GLfloat x_max = -10, y_max = -10, z_max = -10;
-  for (size_t i = 0; i < verteces_.size(); i += 3) {
-    for (size_t j = 0; j < 3; ++j) {
-      if (j == 0 && abs(verteces_[i + j]) > x_max)
-        x_max = abs(verteces_[i + j]);
-      if (j == 1 && abs(verteces_[i + j]) > y_max)
-        y_max = abs(verteces_[i + j]);
-      if (j == 2 && abs(verteces_[i + j]) > z_max)
-        z_max = abs(verteces_[i + j]);
-    }
-  }
-  normalize_coef_ = (x_max + y_max + z_max) / 3;
 }
 
 void MyOpenGLWidget::BuildLines() {

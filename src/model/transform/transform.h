@@ -1,6 +1,6 @@
 #ifndef CPP4_3DVIEWER_V2_SRC_TRANSFORM_H_
 #define CPP4_3DVIEWER_V2_SRC_TRANSFORM_H_
 
-namespace s21 {}
+namespace s21 {}  // namespace s21
 
 #endif  // CPP4_3DVIEWER_V2_SRC_TRANSFORM_H_
