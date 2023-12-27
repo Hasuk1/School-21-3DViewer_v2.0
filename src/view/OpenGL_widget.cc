@@ -36,6 +36,37 @@ void MyOpenGLWidget::paintGL() {
   glLoadIdentity();
 }
 
+void MyOpenGLWidget::mousePressEvent(QMouseEvent *event) {
+  current_pos_ = event->globalPosition().toPoint();
+}
+
+void MyOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
+  new_pos_ = QPoint(event->globalPosition().toPoint() - current_pos_);
+
+  if (event->buttons() & Qt::RightButton) {
+    controller_.TransformModel("move_x", verteces_,
+                               new_pos_.x() * normalize_coef_ / 5120);
+    controller_.TransformModel("move_y", verteces_,
+                               -new_pos_.y() * normalize_coef_ / 5120);
+    update();
+  } else if (event->buttons() & Qt::LeftButton) {
+    controller_.TransformModel("rotate_x", verteces_, -new_pos_.y() * 0.01);
+    controller_.TransformModel("rotate_y", verteces_, new_pos_.x() * 0.01);
+    update();
+  }
+}
+
+void MyOpenGLWidget::wheelEvent(QWheelEvent *event) {
+  QPoint numDegrees = event->angleDelta() / 120;
+  double step = normalize_coef_ / 10;
+  double scale_tmp = scale_val;
+  if ((int)(scale_val + numDegrees.y() * step) > 0) {
+    scale_val += numDegrees.y() * step;
+    controller_.TransformModel("scale", verteces_, scale_val / scale_tmp);
+    update();
+  }
+}
+
 void MyOpenGLWidget::ParseFile(QString path_to_file) {
   verteces_.clear();
   edges_.clear();
@@ -98,32 +129,3 @@ void MyOpenGLWidget::BuildPoints() {
     glDisable(GL_POINT_SMOOTH);
   }
 }
-
-// void MyOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
-//   new_pos = QPoint(event->globalPosition().toPoint() - current_pos);
-
-//  if (event->buttons() & Qt::RightButton) {
-//    move_X(&this->data, new_pos.x() * this->normalize_coef / 5120);
-//    move_Y(&this->data, -new_pos.y() * this->normalize_coef / 5120);
-//    update();
-//  } else if (event->buttons() & Qt::LeftButton) {
-//    rotate_X(&this->data, -new_pos.y() * 0.01);
-//    rotate_Y(&this->data, new_pos.x() * 0.01);
-//    update();
-//  }
-//}
-
-// void MyOpenGLWidget::wheelEvent(QWheelEvent *event) {
-//   QPoint numDegrees = event->angleDelta() / 120;
-//   double step = normalize_coef / 10;
-//   double scale_tmp = scale_val;
-//   if ((int)(scale_val + numDegrees.y() * step) > 0) {
-//     scale_val += numDegrees.y() * step;
-//     scale(&this->data, scale_val / scale_tmp);
-//     update();
-//   }
-// }
-
-// void MyOpenGLWidget::mousePressEvent(QMouseEvent *event) {
-//   current_pos = event->globalPosition().toPoint();
-// }

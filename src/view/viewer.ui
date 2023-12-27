@@ -2537,7 +2537,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="PROJECTION_2">
+   <widget class="QLabel" name="BACKGROUND">
     <property name="geometry">
      <rect>
       <x>1080</x>
@@ -2634,6 +2634,32 @@ color: white;
      <string>GIF</string>
     </property>
    </widget>
+   <zorder>OGLWindow</zorder>
+   <zorder>file</zorder>
+   <zorder>render_obj_file</zorder>
+   <zorder>close_object</zorder>
+   <zorder>moveOBJ</zorder>
+   <zorder>scaleOBJ</zorder>
+   <zorder>edgesSettings</zorder>
+   <zorder>groupBox_8</zorder>
+   <zorder>Edges</zorder>
+   <zorder>Vertices</zorder>
+   <zorder>FileName</zorder>
+   <zorder>SCALE</zorder>
+   <zorder>EDGES</zorder>
+   <zorder>objName</zorder>
+   <zorder>edgesCount</zorder>
+   <zorder>veticesCount</zorder>
+   <zorder>MOVE</zorder>
+   <zorder>projectionSettings</zorder>
+   <zorder>rotateOBJ</zorder>
+   <zorder>label_7</zorder>
+   <zorder>verticesSettings</zorder>
+   <zorder>VERTICES</zorder>
+   <zorder>BACKGROUND</zorder>
+   <zorder>get_screenshot</zorder>
+   <zorder>get_gif</zorder>
+   <zorder>PROJECTION</zorder>
   </widget>
   <action name="actionClose_file">
    <property name="icon">

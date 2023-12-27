@@ -26,6 +26,10 @@ class ObjController {
 
   float GetObjNormalizeCoef() { return facade_.GetNormalizeCoef(); }
 
+  void TransformModel(std::string str, std::vector<double>& vertex, double k) {
+    facade_.TransformModel(str, vertex, k);
+  }
+
  private:
   ObjController() = default;
   ~ObjController() = default;

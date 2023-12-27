@@ -25,8 +25,35 @@ class ObjFacade {
 
   float GetNormalizeCoef() { return parser_.GetNormalizeCoef(); }
 
+  void TransformModel(std::string str, std::vector<double>& vertex, double k) {
+    if (str == "move_x") {
+      MoveX strategy;
+      affine_strategy_.SetStrategy(&strategy);
+    } else if (str == "move_y") {
+      MoveY strategy;
+      affine_strategy_.SetStrategy(&strategy);
+    } else if (str == "move_z") {
+      MoveZ strategy;
+      affine_strategy_.SetStrategy(&strategy);
+    } else if (str == "rotate_x") {
+      RotateX strategy;
+      affine_strategy_.SetStrategy(&strategy);
+    } else if (str == "rotate_y") {
+      RotateY strategy;
+      affine_strategy_.SetStrategy(&strategy);
+    } else if (str == "rotate_z") {
+      RotateZ strategy;
+      affine_strategy_.SetStrategy(&strategy);
+    } else if (str == "scale") {
+      Scale strategy;
+      affine_strategy_.SetStrategy(&strategy);
+    }
+    affine_strategy_.Transform(vertex, k);
+  }
+
  private:
   ObjParser& parser_ = ObjParser::SingleParser();
+  Client affine_strategy_;
 };
 }  // namespace s21
 

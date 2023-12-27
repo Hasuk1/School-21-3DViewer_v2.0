@@ -23,14 +23,14 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
 
   void initializeGL() override;
   void paintGL() override;
+  void mousePressEvent(QMouseEvent *event) override;
+  void mouseMoveEvent(QMouseEvent *event) override;
+  void wheelEvent(QWheelEvent *event) override;
 
   void ParseFile(QString path_to_file);
 
   QString GetVertexAmount();
   QString GetEdgeAmount();
-  //  void mousePressEvent(QMouseEvent *event) override;
-  //  void mouseMoveEvent(QMouseEvent *event) override;
-  //  void wheelEvent(QWheelEvent *event) override;
   ////////////////
   double scale_val = 50;
   double rotate_x, rotate_y, rotate_z;
@@ -57,8 +57,8 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
 
   s21::ObjController &controller_ = s21::ObjController::SinlgeObjController();
 
-  // QPoint current_pos_;
-  // QPoint new_pos_;
+  QPoint current_pos_;
+  QPoint new_pos_;
 };
 
 #endif  // CPP4_3DVIEWER_V2_SRC_OPENGL_WIDGET_H
