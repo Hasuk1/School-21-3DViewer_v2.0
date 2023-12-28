@@ -4,8 +4,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <mutex>
-#include <future>
 
 namespace s21 {
 ObjParser& ObjParser::SingleParser() {
@@ -19,14 +17,8 @@ Status ObjParser::ParseFile(const std::string& file_name) {
   if (!file.is_open()) return kErrorFileMissing;
   std::string current_line;
   Status status = kOk;
-  std::vector<std::future<Status>> futures;
   while (std::getline(file, current_line) && status == kOk) {
-    futures.emplace_back(std::async(&ObjParser::ParseLine, this, current_line));
-  }
-
-  for (auto& future : futures) {
-    Status future_status = future.get();
-    if (status!=kOk) status= future_status;
+    status = ParseLine(current_line);
   }
   vectors_set_.clear();
   status = verteces_.empty() || edges_.empty() ? kErrorFileEmpty : status;
@@ -59,11 +51,9 @@ Status ObjParser::ParseLine(const std::string& line) {
     iss >> type;
     if (type == "v") {
       std::string data = line.substr(2);
-      std::lock_guard<std::mutex> lock(vertex_mutex_);
       status = ParseVertex(data);
     } else if (type == "f") {
       std::string data = line.substr(2);
-      std::lock_guard<std::mutex> lock(face_mutex_);
       status = ParseFace(data);
     }
   }

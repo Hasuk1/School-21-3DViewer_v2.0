@@ -1,7 +1,6 @@
 #ifndef CPP4_3DVIEWER_V2_SRC_FILE_PARSER_H_
 #define CPP4_3DVIEWER_V2_SRC_FILE_PARSER_H_
 
-#include <mutex>
 #include <set>
 #include <string>
 #include <vector>
@@ -33,9 +32,6 @@ class ObjParser {
   std::set<std::pair<unsigned, unsigned>> vectors_set_;
 
   float x_coef_ = -10, y_coef_ = -10, z_coef_ = -10;
-
-  std::mutex vertex_mutex_;
-  std::mutex face_mutex_;
 };
 }  // namespace s21
 

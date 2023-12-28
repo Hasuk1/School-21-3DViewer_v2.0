@@ -1,48 +1,57 @@
 #ifndef CPP4_3DVIEWER_V2_SRC_TRANSFORM_H_
 #define CPP4_3DVIEWER_V2_SRC_TRANSFORM_H_
 
+#include <thread>
 #include <vector>
 
 namespace s21 {
 class Strategy {
  public:
   virtual ~Strategy() = default;
-  virtual void TransformModel(std::vector<double> &vertex, double k) = 0;
+  virtual void TransformModel(std::vector<double> &vertex, unsigned start,
+                              unsigned end, double k) = 0;
 };
 
 class MoveX : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, double k);
+  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
+                      double k);
 };
 
 class MoveY : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, double k);
+  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
+                      double k);
 };
 
 class MoveZ : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, double k);
+  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
+                      double k);
 };
 
 class RotateX : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, double k);
+  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
+                      double k);
 };
 
 class RotateY : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, double k);
+  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
+                      double k);
 };
 
 class RotateZ : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, double k);
+  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
+                      double k);
 };
 
 class Scale : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, double k);
+  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
+                      double k);
 };
 
 class Context {
