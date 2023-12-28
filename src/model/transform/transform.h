@@ -1,57 +1,56 @@
 #ifndef CPP4_3DVIEWER_V2_SRC_TRANSFORM_H_
 #define CPP4_3DVIEWER_V2_SRC_TRANSFORM_H_
 
-#include <thread>
 #include <vector>
 
 namespace s21 {
 class Strategy {
  public:
   virtual ~Strategy() = default;
-  virtual void TransformModel(std::vector<double> &vertex, unsigned start,
-                              unsigned end, double k) = 0;
+  virtual void TransformModel(std::vector<double> &vertex, const unsigned start,
+                              const unsigned end, const double k) = 0;
 };
 
 class MoveX : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
-                      double k);
+  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, const double k);
 };
 
 class MoveY : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
-                      double k);
+  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, const double k);
 };
 
 class MoveZ : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
-                      double k);
+  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, const double k);
 };
 
 class RotateX : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
-                      double k);
+  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, const double k);
 };
 
 class RotateY : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
-                      double k);
+  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, const double k);
 };
 
 class RotateZ : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
-                      double k);
+  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, const double k);
 };
 
 class Scale : public Strategy {
  public:
-  void TransformModel(std::vector<double> &vertex, unsigned start, unsigned end,
-                      double k);
+  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, const double k);
 };
 
 class Context {
@@ -60,14 +59,14 @@ class Context {
 
  public:
   virtual ~Context() = default;
-  virtual void Transform(std::vector<double> &vertex, double k) = 0;
+  virtual void Transform(std::vector<double> &vertex, const double k) = 0;
   virtual void SetStrategy(Strategy *o) = 0;
 };
 
 class Client : public Context {
  public:
-  void SetStrategy(Strategy *v);
-  void Transform(std::vector<double> &vertex, double k);
+  inline void SetStrategy(Strategy *v);
+  inline void Transform(std::vector<double> &vertex, const double k);
 };
 }  // namespace s21
 

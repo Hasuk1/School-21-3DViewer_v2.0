@@ -4,23 +4,23 @@
 #include <thread>
 
 namespace s21 {
-void MoveX::TransformModel(std::vector<double> &vertex, unsigned start,
-                           unsigned end, const double k) {
+void MoveX::TransformModel(std::vector<double> &vertex, const unsigned start,
+                           const unsigned end, const double k) {
   for (unsigned i = start; i < end; i += 3) vertex[i] += k;
 }
 
-void MoveY::TransformModel(std::vector<double> &vertex, unsigned start,
-                           unsigned end, const double k) {
+void MoveY::TransformModel(std::vector<double> &vertex, const unsigned start,
+                           const unsigned end, const double k) {
   for (unsigned i = start + 1; i < end; i += 3) vertex[i] += k;
 }
 
-void MoveZ::TransformModel(std::vector<double> &vertex, unsigned start,
-                           unsigned end, const double k) {
+void MoveZ::TransformModel(std::vector<double> &vertex, const unsigned start,
+                           const unsigned end, const double k) {
   for (unsigned i = start + 2; i < end; i += 3) vertex[i] += k;
 }
 
-void RotateX::TransformModel(std::vector<double> &vertex, unsigned start,
-                             unsigned end, double angle) {
+void RotateX::TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, double angle) {
   angle = angle * M_PI / 180;
   for (unsigned i = start; i < end; i += 3) {
     double y = vertex[i + 1];
@@ -30,8 +30,8 @@ void RotateX::TransformModel(std::vector<double> &vertex, unsigned start,
   }
 }
 
-void RotateY::TransformModel(std::vector<double> &vertex, unsigned start,
-                             unsigned end, double angle) {
+void RotateY::TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, double angle) {
   angle = angle * M_PI / 180;
   for (unsigned i = start; i < end; i += 3) {
     double x = vertex[i];
@@ -41,8 +41,8 @@ void RotateY::TransformModel(std::vector<double> &vertex, unsigned start,
   }
 }
 
-void RotateZ::TransformModel(std::vector<double> &vertex, unsigned start,
-                             unsigned end, double angle) {
+void RotateZ::TransformModel(std::vector<double> &vertex, const unsigned start,
+                             const unsigned end, double angle) {
   angle = angle * M_PI / 180;
   for (unsigned i = start; i < end; i += 3) {
     double x = vertex[i];
@@ -52,14 +52,14 @@ void RotateZ::TransformModel(std::vector<double> &vertex, unsigned start,
   }
 }
 
-void Scale::TransformModel(std::vector<double> &vertex, unsigned start,
-                           unsigned end, double k) {
+void Scale::TransformModel(std::vector<double> &vertex, const unsigned start,
+                           const unsigned end, const double k) {
   for (unsigned i = start; k != 0 && i < end; ++i) vertex[i] *= k;
 }
 
 void Client::SetStrategy(Strategy *v) { operation = v; }
 
-void Client::Transform(std::vector<double> &vertex, double k) {
+void Client::Transform(std::vector<double> &vertex, const double k) {
   unsigned numbers_of_threads = std::thread::hardware_concurrency();
   unsigned start = vertex.size() / numbers_of_threads;
   while (start % 3 != 0) ++start;
