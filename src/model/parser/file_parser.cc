@@ -1,11 +1,11 @@
 #include "file_parser.h"
 
 #include <fstream>
+#include <future>
+#include <mutex>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <mutex>
-#include <future>
 
 namespace s21 {
 ObjParser& ObjParser::SingleParser() {
@@ -26,7 +26,7 @@ Status ObjParser::ParseFile(const std::string& file_name) {
 
   for (auto& future : futures) {
     Status future_status = future.get();
-    if (status!=kOk) status= future_status;
+    if (status != kOk) status = future_status;
   }
   vectors_set_.clear();
   status = verteces_.empty() || edges_.empty() ? kErrorFileEmpty : status;
