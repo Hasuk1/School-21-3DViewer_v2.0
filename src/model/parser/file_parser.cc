@@ -15,8 +15,9 @@ Status ObjParser::ParseFile(const std::string& file_name) {
   ClearData();
   std::ifstream file(file_name);
   if (!file.is_open()) return kErrorFileMissing;
-  std::string current_line;
   Status status = kOk;
+  status = ReserveData(file);
+  std::string current_line;
   while (std::getline(file, current_line) && status == kOk) {
     status = ParseLine(current_line);
   }
@@ -41,6 +42,34 @@ std::vector<unsigned> ObjParser::GetEdges() { return edges_; }
 
 float ObjParser::GetNormalizeCoef() {
   return (x_coef_ + y_coef_ + z_coef_) / 3;
+}
+
+Status ObjParser::ReserveData(std::ifstream& file) {
+  size_t vertex_count = 0;
+  size_t edge_count = 0;
+  std::string current_line;
+  while (std::getline(file, current_line)) {
+    if (current_line.length() <= 2) continue;
+    std::istringstream iss(current_line);
+    std::string type;
+    iss >> type;
+    if (type == "v") {
+      vertex_count += 3;
+    } else if (type == "f") {
+      std::string edges_line = current_line.substr(2);
+      std::istringstream iss_f(edges_line);
+      std::string index_str;
+      while (iss_f >> index_str) edge_count += 2;
+    }
+  }
+  if (vertex_count > 0 && edge_count > 0) {
+    verteces_.reserve(vertex_count);
+    edges_.reserve(edge_count);
+  } else
+    return kErrorFileEmpty;
+  file.clear();
+  file.seekg(0, std::ios::beg);
+  return kOk;
 }
 
 Status ObjParser::ParseLine(const std::string& line) {
@@ -81,10 +110,11 @@ Status ObjParser::ParseVertex(const std::string& data) {
 Status ObjParser::ParseFace(const std::string& data) {
   std::istringstream iss(data);
   std::string index_str;
-  long index, first_index;
+  long first_index;
   bool is_first_index = true;
   std::vector<unsigned int> faces_buff;
   while (iss >> index_str) {
+    long index;
     try {
       index = std::stoi(index_str);
     } catch (const std::out_of_range& e) {

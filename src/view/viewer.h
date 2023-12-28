@@ -22,5 +22,7 @@ class Viewer : public QMainWindow {
  private slots:
   void on_open_obj_file_clicked();
   void on_render_obj_file_clicked();
+  void MoveModelX(int value);
+  void MoveModelY(int value);
 };
 #endif  // CPP4_3DVIEWER_V2_SRC_VIEWER_H_

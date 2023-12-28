@@ -13,44 +13,44 @@ class Strategy {
 
 class MoveX : public Strategy {
  public:
-  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
-                             const unsigned end, const double k);
+  void TransformModel(std::vector<double> &vertex, const unsigned start,
+                      const unsigned end, const double k);
 };
 
 class MoveY : public Strategy {
  public:
-  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
-                             const unsigned end, const double k);
+  void TransformModel(std::vector<double> &vertex, const unsigned start,
+                      const unsigned end, const double k);
 };
 
 class MoveZ : public Strategy {
  public:
-  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
-                             const unsigned end, const double k);
+  void TransformModel(std::vector<double> &vertex, const unsigned start,
+                      const unsigned end, const double k);
 };
 
 class RotateX : public Strategy {
  public:
-  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
-                             const unsigned end, const double k);
+  void TransformModel(std::vector<double> &vertex, const unsigned start,
+                      const unsigned end, const double k);
 };
 
 class RotateY : public Strategy {
  public:
-  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
-                             const unsigned end, const double k);
+  void TransformModel(std::vector<double> &vertex, const unsigned start,
+                      const unsigned end, const double k);
 };
 
 class RotateZ : public Strategy {
  public:
-  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
-                             const unsigned end, const double k);
+  void TransformModel(std::vector<double> &vertex, const unsigned start,
+                      const unsigned end, const double k);
 };
 
 class Scale : public Strategy {
  public:
-  inline void TransformModel(std::vector<double> &vertex, const unsigned start,
-                             const unsigned end, const double k);
+  void TransformModel(std::vector<double> &vertex, const unsigned start,
+                      const unsigned end, const double k);
 };
 
 class Context {
@@ -65,8 +65,8 @@ class Context {
 
 class Client : public Context {
  public:
-  inline void SetStrategy(Strategy *v);
-  inline void Transform(std::vector<double> &vertex, const double k);
+  void SetStrategy(Strategy *v);
+  void Transform(std::vector<double> &vertex, const double k);
 };
 }  // namespace s21
 

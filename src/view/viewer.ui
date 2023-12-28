@@ -173,6 +173,9 @@ color: white;
       <bold>true</bold>
      </font>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
     background-color: rgb(100, 100, 100);
@@ -269,12 +272,12 @@ color: white;
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
-    <widget class="QSlider" name="move_by_x">
+    <widget class="QSlider" name="slider_move_x">
      <property name="geometry">
       <rect>
-       <x>35</x>
-       <y>15</y>
-       <width>341</width>
+       <x>30</x>
+       <y>16</y>
+       <width>295</width>
        <height>25</height>
       </rect>
      </property>
@@ -324,10 +327,10 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_20">
+    <widget class="QLabel" name="x_move_label_back">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>6</x>
        <y>16</y>
        <width>25</width>
        <height>25</height>
@@ -353,10 +356,10 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_21">
+    <widget class="QLabel" name="x_move_label_front">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>5</x>
        <y>15</y>
        <width>25</width>
        <height>25</height>
@@ -380,10 +383,10 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_22">
+    <widget class="QLabel" name="y_move_label_back">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>6</x>
        <y>46</y>
        <width>25</width>
        <height>25</height>
@@ -407,10 +410,10 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_23">
+    <widget class="QLabel" name="y_move_label_front">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>5</x>
        <y>45</y>
        <width>25</width>
        <height>25</height>
@@ -436,12 +439,12 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QSlider" name="move_by_y">
+    <widget class="QSlider" name="slider_move_y">
      <property name="geometry">
       <rect>
-       <x>35</x>
-       <y>45</y>
-       <width>341</width>
+       <x>30</x>
+       <y>46</y>
+       <width>295</width>
        <height>25</height>
       </rect>
      </property>
@@ -491,12 +494,12 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QSlider" name="move_by_z">
+    <widget class="QSlider" name="slider_move_z">
      <property name="geometry">
       <rect>
-       <x>35</x>
-       <y>75</y>
-       <width>341</width>
+       <x>30</x>
+       <y>76</y>
+       <width>295</width>
        <height>25</height>
       </rect>
      </property>
@@ -546,10 +549,10 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_24">
+    <widget class="QLabel" name="z_move_label_back">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>6</x>
        <y>76</y>
        <width>25</width>
        <height>25</height>
@@ -575,10 +578,10 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_25">
+    <widget class="QLabel" name="z_move_label_front">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>5</x>
        <y>75</y>
        <width>25</width>
        <height>25</height>
@@ -602,8 +605,113 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QSpinBox" name="spin_box_move_x">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>16</y>
+       <width>50</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 7px;
+background-color:rgb(30, 30, 30);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="minimum">
+      <number>-100</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spin_box_move_y">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>46</y>
+       <width>50</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 7px;
+background-color:rgb(30, 30, 30);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="minimum">
+      <number>-100</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spin_box_move_z">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>76</y>
+       <width>50</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 7px;
+background-color:rgb(30, 30, 30);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="minimum">
+      <number>-100</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
    </widget>
-   <widget class="QGroupBox" name="scaleOBJ">
+   <widget class="QGroupBox" name="scale_box">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -635,9 +743,9 @@ background-color: rgba(1,1,1,0);</string>
     <widget class="QSlider" name="scale_slider">
      <property name="geometry">
       <rect>
-       <x>35</x>
-       <y>15</y>
-       <width>325</width>
+       <x>30</x>
+       <y>16</y>
+       <width>295</width>
        <height>25</height>
       </rect>
      </property>
@@ -690,7 +798,7 @@ QSlider::handle:horizontal {
     <widget class="QLabel" name="label_27">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>6</x>
        <y>16</y>
        <width>25</width>
        <height>25</height>
@@ -698,7 +806,7 @@ QSlider::handle:horizontal {
      </property>
      <property name="font">
       <font>
-       <pointsize>21</pointsize>
+       <pointsize>18</pointsize>
        <italic>false</italic>
        <bold>true</bold>
        <underline>false</underline>
@@ -710,7 +818,7 @@ QSlider::handle:horizontal {
 background-color: rgba(1,1,1,0);</string>
      </property>
      <property name="text">
-      <string>-</string>
+      <string>-/+</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -719,7 +827,7 @@ background-color: rgba(1,1,1,0);</string>
     <widget class="QLabel" name="label_28">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>5</x>
        <y>15</y>
        <width>25</width>
        <height>25</height>
@@ -727,7 +835,7 @@ background-color: rgba(1,1,1,0);</string>
      </property>
      <property name="font">
       <font>
-       <pointsize>20</pointsize>
+       <pointsize>18</pointsize>
        <italic>false</italic>
        <bold>true</bold>
       </font>
@@ -737,68 +845,54 @@ background-color: rgba(1,1,1,0);</string>
 background-color: rgba(1,1,1,0);</string>
      </property>
      <property name="text">
-      <string>-</string>
+      <string>-/+</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_29">
+    <widget class="QSpinBox" name="spin_box_scale">
      <property name="geometry">
       <rect>
-       <x>361</x>
+       <x>330</x>
        <y>16</y>
-       <width>25</width>
+       <width>50</width>
        <height>25</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>21</pointsize>
-       <italic>false</italic>
+       <pointsize>15</pointsize>
        <bold>true</bold>
-       <underline>false</underline>
-       <strikeout>false</strikeout>
       </font>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color:#5f7c28;
-background-color: rgba(1,1,1,0);</string>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
-     <property name="text">
-      <string>+</string>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 7px;
+background-color:rgb(30, 30, 30);</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
-    </widget>
-    <widget class="QLabel" name="label_30">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>15</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>20</pointsize>
-       <italic>false</italic>
-       <bold>true</bold>
-      </font>
+     <property name="minimum">
+      <number>1</number>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(190, 249, 81);
-background-color: rgba(1,1,1,0);</string>
+     <property name="maximum">
+      <number>200</number>
      </property>
-     <property name="text">
-      <string>+</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="value">
+      <number>50</number>
      </property>
     </widget>
+    <zorder>label_27</zorder>
+    <zorder>scale_slider</zorder>
+    <zorder>label_28</zorder>
+    <zorder>spin_box_scale</zorder>
    </widget>
    <widget class="QGroupBox" name="edgesSettings">
     <property name="geometry">
@@ -1460,7 +1554,7 @@ color: rgb(190, 249, 81); </string>
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
    </widget>
-   <widget class="QLabel" name="SCALE">
+   <widget class="QLabel" name="scale_label">
     <property name="geometry">
      <rect>
       <x>1280</x>
@@ -1623,7 +1717,7 @@ color: white; </string>
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="MOVE">
+   <widget class="QLabel" name="move_label">
     <property name="geometry">
      <rect>
       <x>1280</x>
@@ -1764,7 +1858,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QGroupBox" name="rotateOBJ">
+   <widget class="QGroupBox" name="rotate_box">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -1796,9 +1890,9 @@ border: 2px solid rgb(190, 249, 81);
     <widget class="QSlider" name="rotate_by_x">
      <property name="geometry">
       <rect>
-       <x>35</x>
-       <y>15</y>
-       <width>341</width>
+       <x>30</x>
+       <y>16</y>
+       <width>295</width>
        <height>25</height>
       </rect>
      </property>
@@ -1851,7 +1945,7 @@ QSlider::handle:horizontal {
     <widget class="QLabel" name="label_35">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>6</x>
        <y>16</y>
        <width>25</width>
        <height>25</height>
@@ -1880,7 +1974,7 @@ background-color: rgba(1,1,1,0);</string>
     <widget class="QLabel" name="label_36">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>5</x>
        <y>15</y>
        <width>25</width>
        <height>25</height>
@@ -1907,7 +2001,7 @@ background-color: rgba(1,1,1,0);</string>
     <widget class="QLabel" name="label_37">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>6</x>
        <y>46</y>
        <width>25</width>
        <height>25</height>
@@ -1934,7 +2028,7 @@ background-color: rgba(1,1,1,0);</string>
     <widget class="QLabel" name="label_38">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>5</x>
        <y>45</y>
        <width>25</width>
        <height>25</height>
@@ -1963,9 +2057,9 @@ background-color: rgba(1,1,1,0);</string>
     <widget class="QSlider" name="rotate_by_y">
      <property name="geometry">
       <rect>
-       <x>35</x>
-       <y>45</y>
-       <width>341</width>
+       <x>30</x>
+       <y>46</y>
+       <width>295</width>
        <height>25</height>
       </rect>
      </property>
@@ -2018,9 +2112,9 @@ QSlider::handle:horizontal {
     <widget class="QSlider" name="rotate_by_z">
      <property name="geometry">
       <rect>
-       <x>35</x>
-       <y>75</y>
-       <width>341</width>
+       <x>30</x>
+       <y>76</y>
+       <width>295</width>
        <height>25</height>
       </rect>
      </property>
@@ -2073,7 +2167,7 @@ QSlider::handle:horizontal {
     <widget class="QLabel" name="label_39">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>6</x>
        <y>76</y>
        <width>25</width>
        <height>25</height>
@@ -2102,7 +2196,7 @@ background-color: rgba(1,1,1,0);</string>
     <widget class="QLabel" name="label_45">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>5</x>
        <y>75</y>
        <width>25</width>
        <height>25</height>
@@ -2126,8 +2220,113 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QSpinBox" name="spin_box_rotate_x">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>16</y>
+       <width>50</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 7px;
+background-color:rgb(30, 30, 30);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="minimum">
+      <number>-360</number>
+     </property>
+     <property name="maximum">
+      <number>360</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spin_box_rotate_y">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>46</y>
+       <width>50</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 7px;
+background-color:rgb(30, 30, 30);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="minimum">
+      <number>-360</number>
+     </property>
+     <property name="maximum">
+      <number>360</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spin_box_rotate_z">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>76</y>
+       <width>50</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 7px;
+background-color:rgb(30, 30, 30);</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="minimum">
+      <number>-360</number>
+     </property>
+     <property name="maximum">
+      <number>360</number>
+     </property>
+    </widget>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="rotate_label">
     <property name="geometry">
      <rect>
       <x>1280</x>
@@ -2639,21 +2838,21 @@ color: white;
    <zorder>render_obj_file</zorder>
    <zorder>close_object</zorder>
    <zorder>moveOBJ</zorder>
-   <zorder>scaleOBJ</zorder>
+   <zorder>scale_box</zorder>
    <zorder>edgesSettings</zorder>
    <zorder>groupBox_8</zorder>
    <zorder>Edges</zorder>
    <zorder>Vertices</zorder>
    <zorder>FileName</zorder>
-   <zorder>SCALE</zorder>
+   <zorder>scale_label</zorder>
    <zorder>EDGES</zorder>
    <zorder>objName</zorder>
    <zorder>edgesCount</zorder>
    <zorder>veticesCount</zorder>
-   <zorder>MOVE</zorder>
+   <zorder>move_label</zorder>
    <zorder>projectionSettings</zorder>
-   <zorder>rotateOBJ</zorder>
-   <zorder>label_7</zorder>
+   <zorder>rotate_box</zorder>
+   <zorder>rotate_label</zorder>
    <zorder>verticesSettings</zorder>
    <zorder>VERTICES</zorder>
    <zorder>BACKGROUND</zorder>

@@ -28,9 +28,14 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   void wheelEvent(QWheelEvent *event) override;
 
   void ParseFile(QString path_to_file);
+  void ReRender();
+  void CloseObject();
 
   QString GetVertexAmount();
   QString GetEdgeAmount();
+
+  void MoveByX(int value);
+  void MoveByY(int value);
   ////////////////
   double scale_val = 50;
   double rotate_x, rotate_y, rotate_z;
@@ -46,19 +51,17 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
 
  private:
   ~MyOpenGLWidget() override;
-  void CloseObject();
 
   void BuildLines();
   void BuildPoints();
 
-  std::vector<double> verteces_;
-  std::vector<unsigned> edges_;
-  GLfloat normalize_coef_;
-
   s21::ObjController &controller_ = s21::ObjController::SinlgeObjController();
 
-  QPoint current_pos_;
-  QPoint new_pos_;
+  std::vector<double> verteces_;
+  std::vector<double> verteces_copy_;
+  std::vector<unsigned> edges_;
+  GLfloat normalize_coef_;
+  QPoint current_pos_, new_pos_;
 };
 
 #endif  // CPP4_3DVIEWER_V2_SRC_OPENGL_WIDGET_H

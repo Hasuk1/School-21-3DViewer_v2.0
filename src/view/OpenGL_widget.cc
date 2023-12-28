@@ -44,10 +44,9 @@ void MyOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
   new_pos_ = QPoint(event->globalPosition().toPoint() - current_pos_);
 
   if (event->buttons() & Qt::RightButton) {
-    controller_.TransformModel("move_x", verteces_,
-                               new_pos_.x() * normalize_coef_ / 5120);
-    controller_.TransformModel("move_y", verteces_,
-                               -new_pos_.y() * normalize_coef_ / 5120);
+    GLfloat coef = normalize_coef_ / 5120;
+    controller_.TransformModel("move_x", verteces_, new_pos_.x() * coef);
+    controller_.TransformModel("move_y", verteces_, -new_pos_.y() * coef);
     update();
   } else if (event->buttons() & Qt::LeftButton) {
     controller_.TransformModel("rotate_x", verteces_, -new_pos_.y() * 0.01);
@@ -78,6 +77,7 @@ void MyOpenGLWidget::ParseFile(QString path_to_file) {
     normalize_coef_ = controller_.GetObjNormalizeCoef();
     controller_.ClearObjData();
     update();
+    verteces_copy_ = verteces_;
   } else if (status == s21::kErrorIncorrectFile) {
     error_str = "Enter a correctly obj-file";
   } else if (status == s21::kErrorFileMissing) {
@@ -91,6 +91,11 @@ void MyOpenGLWidget::ParseFile(QString path_to_file) {
   }
 }
 
+void MyOpenGLWidget::ReRender() {
+  verteces_ = verteces_copy_;
+  update();
+}
+
 void MyOpenGLWidget::CloseObject() {
   verteces_.clear();
   edges_.clear();
@@ -101,8 +106,21 @@ void MyOpenGLWidget::CloseObject() {
 QString MyOpenGLWidget::GetVertexAmount() {
   return QString::number(verteces_.size() / 3);
 }
+
 QString MyOpenGLWidget::GetEdgeAmount() {
   return QString::number(edges_.size() / 2);
+}
+
+void MyOpenGLWidget::MoveByX(int value) {
+  double value_to_move = (value - translate_x) * normalize_coef_ * 0.01;
+  controller_.TransformModel("move_x", verteces_, value_to_move);
+  translate_x = value;
+}
+
+void MyOpenGLWidget::MoveByY(int value) {
+  double value_to_move = (value - translate_y) * normalize_coef_ * 0.01;
+  controller_.TransformModel("move_y", verteces_, value_to_move);
+  translate_y = value;
 }
 
 void MyOpenGLWidget::BuildLines() {

@@ -20,6 +20,7 @@ class ObjParser {
  private:
   ObjParser() = default;
   ~ObjParser() = default;
+  Status ReserveData(std::ifstream& file);
   Status ParseLine(const std::string& line);
   Status ParseVertex(const std::string& data);
   Status ParseFace(const std::string& data);
