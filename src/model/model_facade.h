@@ -25,26 +25,26 @@ class ObjFacade {
 
   float GetNormalizeCoef() { return parser_.GetNormalizeCoef(); }
 
-  void TransformModel(std::string str, std::vector<double>& vertex, double k) {
-    if (str == "move_x") {
+  void TransformModel(Mode mode, std::vector<double>& vertex, double k) {
+    if (mode == kMoveX) {
       MoveX strategy;
       affine_strategy_.SetStrategy(&strategy);
-    } else if (str == "move_y") {
+    } else if (mode == kMoveY) {
       MoveY strategy;
       affine_strategy_.SetStrategy(&strategy);
-    } else if (str == "move_z") {
+    } else if (mode == kMoveZ) {
       MoveZ strategy;
       affine_strategy_.SetStrategy(&strategy);
-    } else if (str == "rotate_x") {
+    } else if (mode == kRotateX) {
       RotateX strategy;
       affine_strategy_.SetStrategy(&strategy);
-    } else if (str == "rotate_y") {
+    } else if (mode == kRotateY) {
       RotateY strategy;
       affine_strategy_.SetStrategy(&strategy);
-    } else if (str == "rotate_z") {
+    } else if (mode == kRotateZ) {
       RotateZ strategy;
       affine_strategy_.SetStrategy(&strategy);
-    } else if (str == "scale") {
+    } else if (mode == kScale) {
       Scale strategy;
       affine_strategy_.SetStrategy(&strategy);
     }

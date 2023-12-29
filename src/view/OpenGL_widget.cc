@@ -44,13 +44,12 @@ void MyOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
   new_pos_ = QPoint(event->globalPosition().toPoint() - current_pos_);
 
   if (event->buttons() & Qt::RightButton) {
-    GLfloat coef = normalize_coef_ / 5120;
-    controller_.TransformModel("move_x", verteces_, new_pos_.x() * coef);
-    controller_.TransformModel("move_y", verteces_, -new_pos_.y() * coef);
+    TransformOBJ(s21::kMoveX, new_pos_.x() * normalize_coef_ / 5120, true);
+    TransformOBJ(s21::kMoveY, -new_pos_.y() * normalize_coef_ / 5120, true);
     update();
   } else if (event->buttons() & Qt::LeftButton) {
-    controller_.TransformModel("rotate_x", verteces_, -new_pos_.y() * 0.01);
-    controller_.TransformModel("rotate_y", verteces_, new_pos_.x() * 0.01);
+    controller_.TransformModel(s21::kRotateX, verteces_, -new_pos_.y() * 0.01);
+    controller_.TransformModel(s21::kRotateY, verteces_, new_pos_.x() * 0.01);
     update();
   }
 }
@@ -61,7 +60,7 @@ void MyOpenGLWidget::wheelEvent(QWheelEvent *event) {
   double scale_tmp = scale_val;
   if ((int)(scale_val + numDegrees.y() * step) > 0) {
     scale_val += numDegrees.y() * step;
-    controller_.TransformModel("scale", verteces_, scale_val / scale_tmp);
+    controller_.TransformModel(s21::kScale, verteces_, scale_val / scale_tmp);
     update();
   }
 }
@@ -92,6 +91,7 @@ void MyOpenGLWidget::ParseFile(QString path_to_file) {
 }
 
 void MyOpenGLWidget::ReRender() {
+  verteces_.clear();
   verteces_ = verteces_copy_;
   update();
 }
@@ -111,16 +111,21 @@ QString MyOpenGLWidget::GetEdgeAmount() {
   return QString::number(edges_.size() / 2);
 }
 
-void MyOpenGLWidget::MoveByX(int value) {
-  double value_to_move = (value - translate_x) * normalize_coef_ * 0.01;
-  controller_.TransformModel("move_x", verteces_, value_to_move);
-  translate_x = value;
-}
-
-void MyOpenGLWidget::MoveByY(int value) {
-  double value_to_move = (value - translate_y) * normalize_coef_ * 0.01;
-  controller_.TransformModel("move_y", verteces_, value_to_move);
-  translate_y = value;
+void MyOpenGLWidget::TransformOBJ(s21::Mode mode, double value, bool is_click) {
+  double translate_coef;
+  if (mode == s21::kMoveX) {
+    translate_coef = translate_x_;
+    if (!is_click) translate_x_ = value;
+  } else if (mode == s21::kMoveY) {
+    translate_coef = translate_y_;
+    if (!is_click) translate_y_ = value;
+  } else if (mode == s21::kMoveZ) {
+    translate_coef = translate_z_;
+    if (!is_click) translate_z_ = value;
+  } else if (mode == s21::kScale) {
+  }
+  if (!is_click) value = (value - translate_coef) * normalize_coef_ * 0.01;
+  controller_.TransformModel(mode, verteces_, value);
 }
 
 void MyOpenGLWidget::BuildLines() {

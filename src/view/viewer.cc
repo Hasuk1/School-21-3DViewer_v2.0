@@ -4,18 +4,32 @@
 
 #include "ui_viewer.h"
 
-Viewer::Viewer(QWidget *parent) : QMainWindow(parent), ui_(new Ui::Viewer) {
+Viewer::Viewer(QWidget* parent) : QMainWindow(parent), ui_(new Ui::Viewer) {
   ui_->setupUi(this);
-  /*************************************/
-  connect(ui_->slider_move_x, &QSlider::valueChanged, this,
-          &Viewer::MoveModelX);
-  connect(ui_->spin_box_move_x, &QSpinBox::valueChanged, this,
-          &Viewer::MoveModelX);
+  /*Initialize*/
+  connect(ui_->slider_move_x, &QSlider::valueChanged, this, &Viewer::Transform);
+  connect(ui_->spin_box_move_x, QOverload<int>::of(&QSpinBox::valueChanged),
+          ui_->slider_move_x, &QSlider::setValue);
+  connect(ui_->slider_move_x, &QSlider::valueChanged, ui_->spin_box_move_x,
+          QOverload<int>::of(&QSpinBox::setValue));
 
-  connect(ui_->slider_move_y, &QSlider::valueChanged, this,
-          &Viewer::MoveModelY);
-  connect(ui_->spin_box_move_y, &QSpinBox::valueChanged, this,
-          &Viewer::MoveModelY);
+  connect(ui_->slider_move_y, &QSlider::valueChanged, this, &Viewer::Transform);
+  connect(ui_->spin_box_move_y, QOverload<int>::of(&QSpinBox::valueChanged),
+          ui_->slider_move_y, &QSlider::setValue);
+  connect(ui_->slider_move_y, &QSlider::valueChanged, ui_->spin_box_move_y,
+          QOverload<int>::of(&QSpinBox::setValue));
+
+  connect(ui_->slider_move_z, &QSlider::valueChanged, this, &Viewer::Transform);
+  connect(ui_->spin_box_move_z, QOverload<int>::of(&QSpinBox::valueChanged),
+          ui_->slider_move_z, &QSlider::setValue);
+  connect(ui_->slider_move_z, &QSlider::valueChanged, ui_->spin_box_move_z,
+          QOverload<int>::of(&QSpinBox::setValue));
+
+  connect(ui_->slider_scale, &QSlider::valueChanged, this, &Viewer::Transform);
+  connect(ui_->spin_box_scale, QOverload<int>::of(&QSpinBox::valueChanged),
+          ui_->slider_scale, &QSlider::setValue);
+  connect(ui_->slider_scale, &QSlider::valueChanged, ui_->spin_box_scale,
+          QOverload<int>::of(&QSpinBox::setValue));
 }
 
 Viewer::~Viewer() {
@@ -31,40 +45,43 @@ void Viewer::on_open_obj_file_clicked() {
 
 void Viewer::on_render_obj_file_clicked() {
   if (QFile::exists(ui_->path_to_obj_file->text())) {
-    QString current_open_file_name = ui_->objName->text();
+    QString current_open_file_name = ui_->current_obj_file_name->text();
     QFileInfo file_info(ui_->path_to_obj_file->text());
     QString file_name_to_render = file_info.fileName();
     if (current_open_file_name != file_name_to_render) {
       ui_->OGLWindow->ParseFile(ui_->path_to_obj_file->text());
-      ui_->objName->setText(file_name_to_render);
-      ui_->edgesCount->setText(ui_->OGLWindow->GetEdgeAmount());
-      ui_->veticesCount->setText(ui_->OGLWindow->GetVertexAmount());
-    } else {
+      ui_->current_obj_file_name->setText(file_name_to_render);
+      ui_->current_obj_edges->setText(ui_->OGLWindow->GetEdgeAmount());
+      ui_->current_obj_vertices->setText(ui_->OGLWindow->GetVertexAmount());
+    } else
       ui_->OGLWindow->ReRender();
-
-      ui_->spin_box_move_x->setValue(0);
-      ui_->slider_move_x->setValue(0);
-      ui_->spin_box_move_y->setValue(0);
-      ui_->slider_move_y->setValue(0);
-    }
+    /*Set standart settings*/
+    ui_->spin_box_move_x->setValue(0);
+    ui_->slider_move_x->setValue(0);
+    ui_->spin_box_move_y->setValue(0);
+    ui_->slider_move_y->setValue(0);
+    ui_->spin_box_move_z->setValue(0);
+    ui_->slider_move_z->setValue(0);
   } else {
     QMessageBox::information(this, "ERROR", "Enter a path to file correctly");
-    ui_->veticesCount->setText("");
-    ui_->edgesCount->setText("");
-    ui_->objName->setText("");
+    ui_->current_obj_vertices->setText("");
+    ui_->current_obj_edges->setText("");
+    ui_->current_obj_file_name->setText("");
   }
 }
 
-void Viewer::MoveModelX(int value) {
-  ui_->spin_box_move_x->setValue(value);
-  ui_->slider_move_x->setValue(value);
-  ui_->OGLWindow->MoveByX(value);
-  ui_->OGLWindow->update();
-}
-
-void Viewer::MoveModelY(int value) {
-  ui_->spin_box_move_y->setValue(value);
-  ui_->slider_move_y->setValue(value);
-  ui_->OGLWindow->MoveByY(value);
+void Viewer::Transform(int value) {
+  QObject* senderObject = sender();
+  s21::Mode mode = s21::kDefault;
+  if (senderObject == ui_->slider_move_x) {
+    mode = s21::kMoveX;
+  } else if (senderObject == ui_->slider_move_y) {
+    mode = s21::kMoveY;
+  } else if (senderObject == ui_->slider_move_z) {
+    mode = s21::kMoveY;
+  } else if (senderObject == ui_->slider_scale) {
+    mode = s21::kScale;
+  }
+  if (mode != s21::kDefault) ui_->OGLWindow->TransformOBJ(mode, value, false);
   ui_->OGLWindow->update();
 }

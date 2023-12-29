@@ -16,6 +16,14 @@
 
 #include "./../controller/3d_viewer_controller.h"
 
+namespace s21 {
+struct ColorRGB {
+  double red;
+  double green;
+  double blue;
+};
+}  // namespace s21
+
 class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT
  public:
@@ -34,12 +42,11 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   QString GetVertexAmount();
   QString GetEdgeAmount();
 
-  void MoveByX(int value);
-  void MoveByY(int value);
+  void TransformOBJ(s21::Mode mode, double value, bool is_click);
   ////////////////
   double scale_val = 50;
   double rotate_x, rotate_y, rotate_z;
-  double translate_x, translate_y, translate_z;
+
   double v_size = 1;
   double l_thickness = 1;
   int projection_type = 1;  // 0-параллельная 1-центральная
@@ -60,8 +67,11 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   std::vector<double> verteces_;
   std::vector<double> verteces_copy_;
   std::vector<unsigned> edges_;
-  GLfloat normalize_coef_;
+
   QPoint current_pos_, new_pos_;
+
+  GLfloat normalize_coef_;
+  double translate_x_, translate_y_, translate_z_;
 };
 
 #endif  // CPP4_3DVIEWER_V2_SRC_OPENGL_WIDGET_H

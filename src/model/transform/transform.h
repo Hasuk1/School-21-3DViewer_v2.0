@@ -4,6 +4,17 @@
 #include <vector>
 
 namespace s21 {
+enum Mode {
+  kMoveX,
+  kMoveY,
+  kMoveZ,
+  kRotateX,
+  kRotateY,
+  kRotateZ,
+  kScale,
+  kDefault
+};
+
 class Strategy {
  public:
   virtual ~Strategy() = default;
