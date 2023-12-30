@@ -47,8 +47,8 @@ void RotateZ::TransformModel(std::vector<double> &vertex, const unsigned start,
   for (unsigned i = start; i < end; i += 3) {
     double x = vertex[i];
     double y = vertex[i + 1];
-    vertex[i + 1] = x * cos(angle) + y * sin(angle);
-    vertex[i + 2] = -x * sin(angle) + y * cos(angle);
+    vertex[i] = x * cos(angle) + y * sin(angle);
+    vertex[i + 1] = -x * sin(angle) + y * cos(angle);
   }
 }
 

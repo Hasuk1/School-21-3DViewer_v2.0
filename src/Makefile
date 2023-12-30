@@ -61,11 +61,10 @@ gcov_report: clean
 clang:
 	@echo "===> Formatting your code for Google Style <==="
 	@clang-format -i -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui controller/*.h
-	@clang-format -i -style=GOOGLE main.cc
 
 style:
 	@echo "===> Checking your code for Google Style <==="
-	@clang-format -n -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui
+	@clang-format -n -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui controller/*.h
 
 leaks:
 	@if [ "$(OS)" = "Darwin" ]; then \
@@ -87,10 +86,5 @@ valgrind:
 docker:
 	@docker build . -t 3d_viewer:2.0 -f ./Dockerfile
 	@docker run --rm -it --name 3d_viewer_test -v $(PWD):/home/3d_viewer 3d_viewer:2.0
-
-main:
-	g++ -std=c++17 main.cc model/parser/file_parser.cc  -o test
-	clear && ./test
-	rm -rf test
 
 .PHONY: install open uninstall clean tests dvi dist gcov_report clang style

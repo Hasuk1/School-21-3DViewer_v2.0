@@ -6,12 +6,12 @@
 #include <vector>
 
 namespace s21 {
-ObjParser& ObjParser::SingleParser() {
+ObjParser &ObjParser::SingleParser() {
   static ObjParser TheObjParser;
   return TheObjParser;
 }
 
-Status ObjParser::ParseFile(const std::string& file_name) {
+Status ObjParser::ParseFile(const std::string &file_name) {
   ClearData();
   std::ifstream file(file_name);
   if (!file.is_open()) return kErrorFileMissing;
@@ -44,7 +44,7 @@ float ObjParser::GetNormalizeCoef() {
   return (x_coef_ + y_coef_ + z_coef_) / 3;
 }
 
-Status ObjParser::ReserveData(std::ifstream& file) {
+Status ObjParser::ReserveData(std::ifstream &file) {
   size_t vertex_count = 0;
   size_t edge_count = 0;
   std::string current_line;
@@ -72,7 +72,7 @@ Status ObjParser::ReserveData(std::ifstream& file) {
   return kOk;
 }
 
-Status ObjParser::ParseLine(const std::string& line) {
+Status ObjParser::ParseLine(const std::string &line) {
   Status status = kOk;
   if (line.length() > 2) {
     std::istringstream iss(line);
@@ -89,7 +89,7 @@ Status ObjParser::ParseLine(const std::string& line) {
   return status;
 }
 
-Status ObjParser::ParseVertex(const std::string& data) {
+Status ObjParser::ParseVertex(const std::string &data) {
   std::istringstream iss(data);
   double x, y, z;
   if (iss >> x >> y >> z) {
@@ -107,7 +107,7 @@ Status ObjParser::ParseVertex(const std::string& data) {
   return kOk;
 }
 
-Status ObjParser::ParseFace(const std::string& data) {
+Status ObjParser::ParseFace(const std::string &data) {
   std::istringstream iss(data);
   std::string index_str;
   long first_index;
@@ -117,7 +117,7 @@ Status ObjParser::ParseFace(const std::string& data) {
     long index;
     try {
       index = std::stoi(index_str);
-    } catch (const std::out_of_range& e) {
+    } catch (const std::out_of_range &e) {
       return kErrorIncorrectFile;
     }
     if (index > static_cast<long>(verteces_.size())) return kErrorIncorrectFile;
@@ -139,7 +139,7 @@ Status ObjParser::ParseFace(const std::string& data) {
   return kOk;
 }
 
-void ObjParser::InsertUniqueVector(const std::vector<unsigned>& data) {
+void ObjParser::InsertUniqueVector(const std::vector<unsigned> &data) {
   for (auto it = data.begin(); it != data.end() && data.size() % 2 == 0;
        it += 2) {
     std::pair<unsigned, unsigned> vector(*it, *(it + 1));

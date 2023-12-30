@@ -44,9 +44,6 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
 
   void TransformOBJ(s21::Mode mode, double value, bool is_click);
   ////////////////
-  double scale_val = 50;
-  double rotate_x, rotate_y, rotate_z;
-
   double v_size = 1;
   double l_thickness = 1;
   int projection_type = 1;  // 0-параллельная 1-центральная
@@ -61,6 +58,9 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
 
   void BuildLines();
   void BuildPoints();
+  void MoveOBJ(s21::Mode mode, double value, bool is_click);
+  void RotateOBJ(s21::Mode mode, double value, bool is_click);
+  void ScaleOBJ(double value, bool is_click);
 
   s21::ObjController &controller_ = s21::ObjController::SinlgeObjController();
 
@@ -72,6 +72,8 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
 
   GLfloat normalize_coef_;
   double translate_x_, translate_y_, translate_z_;
+  double rotate_x_, rotate_y_, rotate_z_;
+  double scale_val_ = 50;
 };
 
 #endif  // CPP4_3DVIEWER_V2_SRC_OPENGL_WIDGET_H

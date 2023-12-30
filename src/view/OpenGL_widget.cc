@@ -48,21 +48,16 @@ void MyOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
     TransformOBJ(s21::kMoveY, -new_pos_.y() * normalize_coef_ / 5120, true);
     update();
   } else if (event->buttons() & Qt::LeftButton) {
-    controller_.TransformModel(s21::kRotateX, verteces_, -new_pos_.y() * 0.01);
-    controller_.TransformModel(s21::kRotateY, verteces_, new_pos_.x() * 0.01);
+    TransformOBJ(s21::kRotateX, -new_pos_.y() * 0.01, true);
+    TransformOBJ(s21::kRotateY, new_pos_.x() * 0.01, true);
     update();
   }
 }
 
 void MyOpenGLWidget::wheelEvent(QWheelEvent *event) {
   QPoint numDegrees = event->angleDelta() / 120;
-  double step = normalize_coef_ / 10;
-  double scale_tmp = scale_val;
-  if ((int)(scale_val + numDegrees.y() * step) > 0) {
-    scale_val += numDegrees.y() * step;
-    controller_.TransformModel(s21::kScale, verteces_, scale_val / scale_tmp);
-    update();
-  }
+  TransformOBJ(s21::kScale, numDegrees.y() * normalize_coef_ / 5, true);
+  update();
 }
 
 void MyOpenGLWidget::ParseFile(QString path_to_file) {
@@ -111,7 +106,7 @@ QString MyOpenGLWidget::GetEdgeAmount() {
   return QString::number(edges_.size() / 2);
 }
 
-void MyOpenGLWidget::TransformOBJ(s21::Mode mode, double value, bool is_click) {
+void MyOpenGLWidget::MoveOBJ(s21::Mode mode, double value, bool is_click) {
   double translate_coef;
   if (mode == s21::kMoveX) {
     translate_coef = translate_x_;
@@ -122,10 +117,47 @@ void MyOpenGLWidget::TransformOBJ(s21::Mode mode, double value, bool is_click) {
   } else if (mode == s21::kMoveZ) {
     translate_coef = translate_z_;
     if (!is_click) translate_z_ = value;
-  } else if (mode == s21::kScale) {
   }
   if (!is_click) value = (value - translate_coef) * normalize_coef_ * 0.01;
   controller_.TransformModel(mode, verteces_, value);
+}
+
+void MyOpenGLWidget::RotateOBJ(s21::Mode mode, double value, bool is_click) {
+  double rotate_coef;
+  if (mode == s21::kRotateX) {
+    rotate_coef = rotate_x_;
+    if (!is_click) rotate_x_ = value;
+  } else if (mode == s21::kRotateY) {
+    rotate_coef = rotate_y_;
+    if (!is_click) rotate_y_ = value;
+  } else if (mode == s21::kRotateZ) {
+    rotate_coef = rotate_z_;
+    if (!is_click) rotate_z_ = value;
+  }
+  if (!is_click) value -= rotate_coef;
+  controller_.TransformModel(mode, verteces_, value);
+}
+
+void MyOpenGLWidget::ScaleOBJ(double value, bool is_click) {
+  double scale_coef = scale_val_;
+  if (is_click && (int)(scale_val_ + value) > 0) {
+    scale_val_ += value;
+    controller_.TransformModel(s21::kScale, verteces_, scale_val_ / scale_coef);
+  } else if (!is_click) {
+    scale_val_ = value;
+    controller_.TransformModel(s21::kScale, verteces_, value / scale_coef);
+  }
+}
+
+void MyOpenGLWidget::TransformOBJ(s21::Mode mode, double value, bool is_click) {
+  if (mode == s21::kMoveX || mode == s21::kMoveY || mode == s21::kMoveZ) {
+    MoveOBJ(mode, value, is_click);
+  } else if (mode == s21::kRotateX || mode == s21::kRotateY ||
+             mode == s21::kRotateZ) {
+    RotateOBJ(mode, value, is_click);
+  } else if (mode == s21::kScale) {
+    ScaleOBJ(value, is_click);
+  }
 }
 
 void MyOpenGLWidget::BuildLines() {
@@ -136,19 +168,13 @@ void MyOpenGLWidget::BuildLines() {
   glLineWidth(this->l_thickness);
   glColor3f(this->l_r, this->l_g, this->l_b);
   glDrawElements(GL_LINES, edges_.size(), GL_UNSIGNED_INT, edges_.data());
-  if (this->l_type == 1) {
-    glDisable(GL_LINE_STIPPLE);
-  }
+  if (this->l_type == 1) glDisable(GL_LINE_STIPPLE);
 }
 
 void MyOpenGLWidget::BuildPoints() {
-  if (this->v_type == 1) {
-    glEnable(GL_POINT_SMOOTH);
-  }
+  if (this->v_type == 1) glEnable(GL_POINT_SMOOTH);
   glPointSize(this->v_size);
   glColor3f(this->v_r, this->v_g, this->v_b);
   glDrawArrays(GL_POINTS, 0, verteces_.size());
-  if (this->v_type == 1) {
-    glDisable(GL_POINT_SMOOTH);
-  }
+  if (this->v_type == 1) glDisable(GL_POINT_SMOOTH);
 }
