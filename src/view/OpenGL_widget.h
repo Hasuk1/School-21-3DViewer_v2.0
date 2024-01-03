@@ -22,6 +22,17 @@ struct ColorRGB {
   double green;
   double blue;
 };
+
+struct Settings {
+  ColorRGB vertices_rgb = {1, 1, 1};
+  int vertices_type = 0;
+  double vertices_size = 1;
+  ColorRGB line_rgb = {1, 100, 1};
+  int line_type = 0;
+  double line_thickness = 1;
+  ColorRGB background_rgb = {0, 0, 0};
+  int projection_type = 0;
+};
 }  // namespace s21
 
 class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
@@ -39,19 +50,14 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   void ReRender();
   void CloseObject();
 
+  void SetProjectionType(int value);
+  void SetEdgesColor(s21::ColorRGB edges_rgb);
+
+  s21::Settings GetSettings();
   QString GetVertexAmount();
   QString GetEdgeAmount();
 
   void TransformOBJ(s21::Mode mode, double value, bool is_click);
-  ////////////////
-  double v_size = 1;
-  double l_thickness = 1;
-  int projection_type = 1;  // 0-параллельная 1-центральная
-  int v_type = 0;
-  int l_type = 0;
-  double v_r = 1, v_g = 1, v_b = 1;
-  double l_r = 1, l_g = 100, l_b = 1;
-  double bg_r = 0, bg_g = 0, bg_b = 0;
 
  private:
   ~MyOpenGLWidget() override;
@@ -74,6 +80,7 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   double translate_x_, translate_y_, translate_z_;
   double rotate_x_, rotate_y_, rotate_z_;
   double scale_val_ = 50;
+  s21::Settings settings_;
 };
 
 #endif  // CPP4_3DVIEWER_V2_SRC_OPENGL_WIDGET_H

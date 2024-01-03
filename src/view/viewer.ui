@@ -1037,7 +1037,7 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesRed">
+    <widget class="QPushButton" name="edges_red">
      <property name="geometry">
       <rect>
        <x>15</x>
@@ -1062,7 +1062,7 @@ border-radius: 5px;</string>
       <string>R</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesOrange">
+    <widget class="QPushButton" name="edges_orange">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -1087,7 +1087,7 @@ border-radius: 5px;</string>
       <string>O</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesYellow">
+    <widget class="QPushButton" name="edges_yellow">
      <property name="geometry">
       <rect>
        <x>65</x>
@@ -1113,7 +1113,7 @@ border-radius: 5px;
       <string>Y</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesGreen">
+    <widget class="QPushButton" name="edges_green">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1138,7 +1138,7 @@ border-radius: 5px;</string>
       <string>G</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesWhite">
+    <widget class="QPushButton" name="edges_white">
      <property name="geometry">
       <rect>
        <x>165</x>
@@ -1196,7 +1196,7 @@ color: white;
       <string>RESET</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesBlue">
+    <widget class="QPushButton" name="edges_blue">
      <property name="geometry">
       <rect>
        <x>115</x>
@@ -1221,7 +1221,7 @@ border-radius: 5px;</string>
       <string>B</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesPurple">
+    <widget class="QPushButton" name="edges_purple">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1583,7 +1583,7 @@ border: 2px solid rgb(190, 249, 81);
     <property name="title">
      <string/>
     </property>
-    <widget class="QComboBox" name="projection_type">
+    <widget class="QComboBox" name="combo_box_projection_type">
      <property name="geometry">
       <rect>
        <x>195</x>
@@ -1627,6 +1627,9 @@ QComboBox::view {
     background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(211, 211, 211, 255), stop:1 rgba(255, 255, 255, 255));
     border-radius: 6px; 
 }</string>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
      </property>
      <property name="insertPolicy">
       <enum>QComboBox::InsertAtTop</enum>
