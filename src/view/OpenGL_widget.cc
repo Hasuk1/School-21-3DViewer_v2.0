@@ -104,9 +104,29 @@ void MyOpenGLWidget::SetProjectionType(int value) {
 }
 
 void MyOpenGLWidget::SetEdgesColor(s21::ColorRGB edges_rgb) {
-  settings_.line_rgb.red = edges_rgb.red;
-  settings_.line_rgb.blue = edges_rgb.blue;
-  settings_.line_rgb.green = edges_rgb.green;
+  settings_.edges_rgb.red = edges_rgb.red / 255;
+  settings_.edges_rgb.blue = edges_rgb.blue / 255;
+  settings_.edges_rgb.green = edges_rgb.green / 255;
+}
+
+void MyOpenGLWidget::SetEdgesType(int value) { settings_.edges_type = value; }
+
+void MyOpenGLWidget::SetEdgesThickness(int value) {
+  settings_.edges_thickness = value;
+}
+
+void MyOpenGLWidget::SetVerticesColor(s21::ColorRGB vertices_rgb) {
+  settings_.vertices_rgb.red = vertices_rgb.red / 255;
+  settings_.vertices_rgb.blue = vertices_rgb.blue / 255;
+  settings_.vertices_rgb.green = vertices_rgb.green / 255;
+}
+
+void MyOpenGLWidget::SetVerticesType(int value) {
+  settings_.vertices_type = value;
+}
+
+void MyOpenGLWidget::SetVerticesSize(int value) {
+  settings_.vertices_size = value;
 }
 
 s21::Settings MyOpenGLWidget::GetSettings() { return settings_; }
@@ -174,15 +194,15 @@ void MyOpenGLWidget::TransformOBJ(s21::Mode mode, double value, bool is_click) {
 }
 
 void MyOpenGLWidget::BuildLines() {
-  if (settings_.line_type == 1) {
+  if (settings_.edges_type == 1) {
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0x00FF);
   }
-  glLineWidth(settings_.line_thickness);
-  glColor3f(settings_.line_rgb.red, settings_.line_rgb.green,
-            settings_.line_rgb.blue);
+  glLineWidth(settings_.edges_thickness);
+  glColor3f(settings_.edges_rgb.red, settings_.edges_rgb.green,
+            settings_.edges_rgb.blue);
   glDrawElements(GL_LINES, edges_.size(), GL_UNSIGNED_INT, edges_.data());
-  if (settings_.line_type == 1) glDisable(GL_LINE_STIPPLE);
+  if (settings_.edges_type == 1) glDisable(GL_LINE_STIPPLE);
 }
 
 void MyOpenGLWidget::BuildPoints() {

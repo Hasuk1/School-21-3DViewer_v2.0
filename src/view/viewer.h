@@ -23,11 +23,16 @@ class Viewer : public QMainWindow {
  private:
   void SaveSettings();
   void LoadSettings();
-  void SetLoadedSettings(s21::Settings settings);
-
   void ChangeColorEdges();
+  void SetStandartEdgesButtonStyle();
+  void ChangeTypeEdges();
+  void ChangeThicknessEdges();
+  void ChangeColorVertices();
+  void SetStandarVerticesButtonStyle();
+  void ChangeTypeVertices();
+  void ChangeThicknessVertices();
   void ChangeProjectionType();
-
+  void SetStandartAffine();
   void InitializeConnect();
 
   Ui::Viewer *ui_;
@@ -36,7 +41,9 @@ class Viewer : public QMainWindow {
  private slots:
   void on_open_obj_file_clicked();
   void on_render_obj_file_clicked();
-  void on_close_object_clicked();
+  void on_button_close_object_clicked();
   void Transform(int value);
+  void on_edges_reset_clicked();
+  void on_vertices_reset_clicked();
 };
 #endif  // CPP4_3DVIEWER_V2_SRC_VIEWER_H_
