@@ -13,12 +13,13 @@ void MyOpenGLWidget::initializeGL() {
 }
 
 void MyOpenGLWidget::paintGL() {
-  glClearColor(bg_r, bg_g, bg_b, 1);
+  glClearColor(settings_.background_rgb.red, settings_.background_rgb.green,
+               settings_.background_rgb.blue, 1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glVertexPointer(3, GL_DOUBLE, 0, verteces_.data());
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  if (this->projection_type == 0) {
+  if (settings_.projection_type == 0) {
     glOrtho(-1 * normalize_coef_, 1 * normalize_coef_, -1 * normalize_coef_,
             1 * normalize_coef_, -1 * normalize_coef_, 1000 * normalize_coef_);
     glTranslatef(0, -normalize_coef_ / 2, 0);
@@ -29,7 +30,7 @@ void MyOpenGLWidget::paintGL() {
     glRotatef(30, 1, 0, 0);
   }
   glEnableClientState(GL_VERTEX_ARRAY);
-  if (this->v_type != 0) BuildPoints();
+  if (settings_.vertices_type != 0) BuildPoints();
   BuildLines();
   glDisableClientState(GL_VERTEX_ARRAY);
   glMatrixMode(GL_MODELVIEW);
@@ -98,6 +99,38 @@ void MyOpenGLWidget::CloseObject() {
   update();
 }
 
+void MyOpenGLWidget::SetProjectionType(int value) {
+  settings_.projection_type = value;
+}
+
+void MyOpenGLWidget::SetEdgesColor(s21::ColorRGB edges_rgb) {
+  settings_.edges_rgb.red = edges_rgb.red / 255;
+  settings_.edges_rgb.blue = edges_rgb.blue / 255;
+  settings_.edges_rgb.green = edges_rgb.green / 255;
+}
+
+void MyOpenGLWidget::SetEdgesType(int value) { settings_.edges_type = value; }
+
+void MyOpenGLWidget::SetEdgesThickness(int value) {
+  settings_.edges_thickness = value;
+}
+
+void MyOpenGLWidget::SetVerticesColor(s21::ColorRGB vertices_rgb) {
+  settings_.vertices_rgb.red = vertices_rgb.red / 255;
+  settings_.vertices_rgb.blue = vertices_rgb.blue / 255;
+  settings_.vertices_rgb.green = vertices_rgb.green / 255;
+}
+
+void MyOpenGLWidget::SetVerticesType(int value) {
+  settings_.vertices_type = value;
+}
+
+void MyOpenGLWidget::SetVerticesSize(int value) {
+  settings_.vertices_size = value;
+}
+
+s21::Settings MyOpenGLWidget::GetSettings() { return settings_; }
+
 QString MyOpenGLWidget::GetVertexAmount() {
   return QString::number(verteces_.size() / 3);
 }
@@ -161,20 +194,22 @@ void MyOpenGLWidget::TransformOBJ(s21::Mode mode, double value, bool is_click) {
 }
 
 void MyOpenGLWidget::BuildLines() {
-  if (this->l_type == 1) {
+  if (settings_.edges_type == 1) {
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0x00FF);
   }
-  glLineWidth(this->l_thickness);
-  glColor3f(this->l_r, this->l_g, this->l_b);
+  glLineWidth(settings_.edges_thickness);
+  glColor3f(settings_.edges_rgb.red, settings_.edges_rgb.green,
+            settings_.edges_rgb.blue);
   glDrawElements(GL_LINES, edges_.size(), GL_UNSIGNED_INT, edges_.data());
-  if (this->l_type == 1) glDisable(GL_LINE_STIPPLE);
+  if (settings_.edges_type == 1) glDisable(GL_LINE_STIPPLE);
 }
 
 void MyOpenGLWidget::BuildPoints() {
-  if (this->v_type == 1) glEnable(GL_POINT_SMOOTH);
-  glPointSize(this->v_size);
-  glColor3f(this->v_r, this->v_g, this->v_b);
+  if (settings_.vertices_type == 1) glEnable(GL_POINT_SMOOTH);
+  glPointSize(settings_.vertices_size);
+  glColor3f(settings_.vertices_rgb.red, settings_.vertices_rgb.green,
+            settings_.vertices_rgb.blue);
   glDrawArrays(GL_POINTS, 0, verteces_.size());
-  if (this->v_type == 1) glDisable(GL_POINT_SMOOTH);
+  if (settings_.vertices_type == 1) glDisable(GL_POINT_SMOOTH);
 }

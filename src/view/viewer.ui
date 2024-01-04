@@ -80,7 +80,7 @@ color: #596686;
 border-radius: 10px;</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="file">
+   <widget class="QGroupBox" name="FilePath">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -198,7 +198,7 @@ color: white;
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="close_object">
+   <widget class="QPushButton" name="button_close_object">
     <property name="geometry">
      <rect>
       <x>1390</x>
@@ -243,7 +243,7 @@ color: white;
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QGroupBox" name="moveOBJ">
+   <widget class="QGroupBox" name="MoveOBJ">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -711,7 +711,7 @@ background-color:rgb(30, 30, 30);</string>
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="scale_box">
+   <widget class="QGroupBox" name="ScaleOBJ">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -795,7 +795,7 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_27">
+    <widget class="QLabel" name="scale_label_front">
      <property name="geometry">
       <rect>
        <x>6</x>
@@ -824,7 +824,7 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_28">
+    <widget class="QLabel" name="scale_label_back">
      <property name="geometry">
       <rect>
        <x>5</x>
@@ -889,12 +889,12 @@ background-color:rgb(30, 30, 30);</string>
       <number>50</number>
      </property>
     </widget>
-    <zorder>label_27</zorder>
+    <zorder>scale_label_front</zorder>
     <zorder>slider_scale</zorder>
-    <zorder>label_28</zorder>
+    <zorder>scale_label_back</zorder>
     <zorder>spin_box_scale</zorder>
    </widget>
-   <widget class="QGroupBox" name="edgesSettings">
+   <widget class="QGroupBox" name="EdgesSettings">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -1037,7 +1037,7 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesRed">
+    <widget class="QPushButton" name="edges_red">
      <property name="geometry">
       <rect>
        <x>15</x>
@@ -1054,15 +1054,13 @@ QSlider::handle:horizontal {
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(211, 54, 48);
-color: rgb(211, 54, 48);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(211, 54, 48);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>R</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesOrange">
+    <widget class="QPushButton" name="edges_orange">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -1079,15 +1077,13 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(226, 148, 61);
-color: rgb(226, 148, 61);
-border-radius: 5px;</string>
+      <string notr="true">background-color:rgb(226, 148, 61);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>O</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesYellow">
+    <widget class="QPushButton" name="edges_yellow">
      <property name="geometry">
       <rect>
        <x>65</x>
@@ -1104,16 +1100,14 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(242, 216, 77);
-color: rgb(242, 216, 77);
-border-radius: 5px;
+      <string notr="true">background-color: rgb(242, 216, 77);border-radius: 5px;
 </string>
      </property>
      <property name="text">
-      <string>Y</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesGreen">
+    <widget class="QPushButton" name="edges_green">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1130,15 +1124,13 @@ border-radius: 5px;
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(102, 195, 89);
-color:rgb(102, 195, 89);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(102, 195, 89);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>G</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesWhite">
+    <widget class="QPushButton" name="edges_white">
      <property name="geometry">
       <rect>
        <x>165</x>
@@ -1155,12 +1147,10 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 255, 255);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(255, 255, 255);border-radius: 5px;border:2px solid rgb(200, 249, 100);</string>
      </property>
      <property name="text">
-      <string>W</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="edges_reset">
@@ -1196,7 +1186,7 @@ color: white;
       <string>RESET</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesBlue">
+    <widget class="QPushButton" name="edges_blue">
      <property name="geometry">
       <rect>
        <x>115</x>
@@ -1213,15 +1203,13 @@ color: white;
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(34, 83, 237);
-color: rgb(34, 83, 237);
-border-radius: 5px;</string>
+      <string notr="true">background-color:rgb(34, 83, 237);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>B</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="edgesPurple">
+    <widget class="QPushButton" name="edges_purple">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1238,16 +1226,14 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(95, 15, 162);
-color: rgb(95, 15, 162);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(95, 15, 162);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>P</string>
+      <string/>
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_8">
+   <widget class="QGroupBox" name="BackgroundSettings">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -1284,12 +1270,10 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(245, 215, 255);
-color: rgb(245, 215, 255);
-border-radius: 5px;</string>
+      <string notr="true">background-color:rgb(245, 215, 255);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>N</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="backgroundBlack">
@@ -1309,12 +1293,10 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 0, 0);
-color:rgb(0, 0, 0);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(0, 0, 0);border-radius: 5px;border:2px solid rgb(200, 249, 100);</string>
      </property>
      <property name="text">
-      <string>B</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="backgroundBlue">
@@ -1334,12 +1316,10 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(66, 66, 169);
-color: rgb(66, 66, 169);
-border-radius: 5px;</string>
+      <string notr="true">background-color:rgb(66, 66, 169);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>P</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="backgroundGreen">
@@ -1359,12 +1339,10 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(190, 249, 81); 
-color:rgb(190, 249, 81); 
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(190, 249, 81);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>G</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="background_reset">
@@ -1417,12 +1395,10 @@ color: white;
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(27, 27, 27);
-color: rgb(27, 27, 27);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(27, 27, 27);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>K</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="backgroundGray2">
@@ -1442,12 +1418,10 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(102, 102, 102);
-color: rgb(102, 102, 102);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(102, 102, 102);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>R</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="backgroundWhite">
@@ -1467,16 +1441,14 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 255, 255);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(255, 255, 255);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>W</string>
+      <string/>
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="scale_label">
+   <widget class="QLabel" name="label_SCALE">
     <property name="geometry">
      <rect>
       <x>1280</x>
@@ -1505,7 +1477,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="EDGES">
+   <widget class="QLabel" name="label_EDGES">
     <property name="geometry">
      <rect>
       <x>1080</x>
@@ -1534,7 +1506,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="move_label">
+   <widget class="QLabel" name="label_MOVE">
     <property name="geometry">
      <rect>
       <x>1280</x>
@@ -1563,7 +1535,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QGroupBox" name="projectionSettings">
+   <widget class="QGroupBox" name="ProjectionSettings">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -1583,7 +1555,7 @@ border: 2px solid rgb(190, 249, 81);
     <property name="title">
      <string/>
     </property>
-    <widget class="QComboBox" name="projection_type">
+    <widget class="QComboBox" name="combo_box_projection_type">
      <property name="geometry">
       <rect>
        <x>195</x>
@@ -1628,6 +1600,9 @@ QComboBox::view {
     border-radius: 6px; 
 }</string>
      </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
      <property name="insertPolicy">
       <enum>QComboBox::InsertAtTop</enum>
      </property>
@@ -1646,7 +1621,7 @@ QComboBox::view {
      </item>
     </widget>
    </widget>
-   <widget class="QLabel" name="PROJECTION">
+   <widget class="QLabel" name="label_PROJECTION">
     <property name="geometry">
      <rect>
       <x>1080</x>
@@ -1675,7 +1650,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QGroupBox" name="rotate_box">
+   <widget class="QGroupBox" name="RotateOBJ">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -1759,7 +1734,7 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_35">
+    <widget class="QLabel" name="x_rotate_label_back_2">
      <property name="geometry">
       <rect>
        <x>6</x>
@@ -1788,7 +1763,7 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_36">
+    <widget class="QLabel" name="x_rotate_label_front_2">
      <property name="geometry">
       <rect>
        <x>5</x>
@@ -1815,7 +1790,7 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_37">
+    <widget class="QLabel" name="y_rotate_label_back_2">
      <property name="geometry">
       <rect>
        <x>6</x>
@@ -1842,7 +1817,7 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_38">
+    <widget class="QLabel" name="y_rotate_label_front_2">
      <property name="geometry">
       <rect>
        <x>5</x>
@@ -1981,7 +1956,7 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_39">
+    <widget class="QLabel" name="z_rotate_label_back_2">
      <property name="geometry">
       <rect>
        <x>6</x>
@@ -2010,7 +1985,7 @@ background-color: rgba(1,1,1,0);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_45">
+    <widget class="QLabel" name="z_rotate_label_front_2">
      <property name="geometry">
       <rect>
        <x>5</x>
@@ -2143,7 +2118,7 @@ background-color:rgb(30, 30, 30);</string>
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="rotate_label">
+   <widget class="QLabel" name="label_ROTATE">
     <property name="geometry">
      <rect>
       <x>1280</x>
@@ -2172,7 +2147,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QGroupBox" name="verticesSettings">
+   <widget class="QGroupBox" name="VerticesSettings">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -2314,7 +2289,7 @@ QSlider::handle:horizontal {
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="verticesRed">
+    <widget class="QPushButton" name="vertices_red">
      <property name="geometry">
       <rect>
        <x>15</x>
@@ -2331,15 +2306,13 @@ QSlider::handle:horizontal {
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(211, 54, 48);
-color: rgb(211, 54, 48);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(211, 54, 48);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>R</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="verticesOrange">
+    <widget class="QPushButton" name="vertices_orange">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -2356,15 +2329,13 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(226, 148, 61);
-color: rgb(226, 148, 61);
-border-radius: 5px;</string>
+      <string notr="true">background-color:rgb(226, 148, 61);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>O</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="verticesYellow">
+    <widget class="QPushButton" name="vertices_yellow">
      <property name="geometry">
       <rect>
        <x>65</x>
@@ -2381,16 +2352,14 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(242, 216, 77);
-color: rgb(242, 216, 77);
-border-radius: 5px;
+      <string notr="true">background-color: rgb(242, 216, 77);border-radius: 5px;
 </string>
      </property>
      <property name="text">
-      <string>Y</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="verticesGreen">
+    <widget class="QPushButton" name="vertices_green">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -2407,15 +2376,13 @@ border-radius: 5px;
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(102, 195, 89);
-color:rgb(102, 195, 89);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(102, 195, 89);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>G</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="verticesWhite">
+    <widget class="QPushButton" name="vertices_white">
      <property name="geometry">
       <rect>
        <x>165</x>
@@ -2432,12 +2399,10 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 255, 255);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(255, 255, 255);border-radius: 5px;border:2px solid rgb(200, 249, 100);</string>
      </property>
      <property name="text">
-      <string>W</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="vertices_reset">
@@ -2473,7 +2438,7 @@ color: white;
       <string>RESET</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="verticesBlue">
+    <widget class="QPushButton" name="vertices_blue">
      <property name="geometry">
       <rect>
        <x>115</x>
@@ -2490,15 +2455,13 @@ color: white;
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(34, 83, 237);
-color: rgb(34, 83, 237);
-border-radius: 5px;</string>
+      <string notr="true">background-color:rgb(34, 83, 237);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>B</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="verticesPurple">
+    <widget class="QPushButton" name="vertices_purple">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -2515,16 +2478,14 @@ border-radius: 5px;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(95, 15, 162);
-color: rgb(95, 15, 162);
-border-radius: 5px;</string>
+      <string notr="true">background-color: rgb(95, 15, 162);border-radius: 5px;</string>
      </property>
      <property name="text">
-      <string>P</string>
+      <string/>
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="VERTICES">
+   <widget class="QLabel" name="label_VERTICES">
     <property name="geometry">
      <rect>
       <x>1080</x>
@@ -2553,7 +2514,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="BACKGROUND">
+   <widget class="QLabel" name="label_BACKGROUND">
     <property name="geometry">
      <rect>
       <x>1080</x>
@@ -2582,7 +2543,7 @@ border: 2px solid rgb(190, 249, 81);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="get_screenshot">
+   <widget class="QPushButton" name="button_get_screenshot">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -2616,7 +2577,7 @@ color: white;
      <string>SCREENSHOT</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="get_gif">
+   <widget class="QPushButton" name="button_get_gif">
     <property name="geometry">
      <rect>
       <x>1240</x>
@@ -2650,7 +2611,7 @@ color: white;
      <string>GIF</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="obj_info">
+   <widget class="QGroupBox" name="InfoOBJ">
     <property name="geometry">
      <rect>
       <x>1040</x>
@@ -2855,26 +2816,26 @@ color: rgb(190, 249, 81); </string>
     </widget>
    </widget>
    <zorder>OGLWindow</zorder>
-   <zorder>file</zorder>
+   <zorder>FilePath</zorder>
    <zorder>render_obj_file</zorder>
-   <zorder>close_object</zorder>
-   <zorder>moveOBJ</zorder>
-   <zorder>scale_box</zorder>
-   <zorder>edgesSettings</zorder>
-   <zorder>groupBox_8</zorder>
-   <zorder>scale_label</zorder>
-   <zorder>EDGES</zorder>
-   <zorder>move_label</zorder>
-   <zorder>projectionSettings</zorder>
-   <zorder>rotate_box</zorder>
-   <zorder>rotate_label</zorder>
-   <zorder>verticesSettings</zorder>
-   <zorder>VERTICES</zorder>
-   <zorder>BACKGROUND</zorder>
-   <zorder>get_screenshot</zorder>
-   <zorder>get_gif</zorder>
-   <zorder>PROJECTION</zorder>
-   <zorder>obj_info</zorder>
+   <zorder>button_close_object</zorder>
+   <zorder>MoveOBJ</zorder>
+   <zorder>ScaleOBJ</zorder>
+   <zorder>EdgesSettings</zorder>
+   <zorder>BackgroundSettings</zorder>
+   <zorder>label_SCALE</zorder>
+   <zorder>label_EDGES</zorder>
+   <zorder>label_MOVE</zorder>
+   <zorder>ProjectionSettings</zorder>
+   <zorder>RotateOBJ</zorder>
+   <zorder>label_ROTATE</zorder>
+   <zorder>VerticesSettings</zorder>
+   <zorder>label_VERTICES</zorder>
+   <zorder>label_BACKGROUND</zorder>
+   <zorder>button_get_screenshot</zorder>
+   <zorder>button_get_gif</zorder>
+   <zorder>label_PROJECTION</zorder>
+   <zorder>InfoOBJ</zorder>
   </widget>
   <action name="actionClose_file">
    <property name="icon">
