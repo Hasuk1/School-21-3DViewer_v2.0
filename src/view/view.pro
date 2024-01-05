@@ -18,6 +18,7 @@ HEADERS += \
     ../model/parser/file_parser.h \
     ../model/transform/transform.h \
     OpenGL_widget.h \
+    gif.h \
     viewer.h
 
 FORMS += \

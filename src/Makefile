@@ -35,7 +35,7 @@ uninstall:
 	@rm -rf ~/Desktop/$(TARGET).app 
 
 clean:
-	@rm -f test *.gcda *.gcno *.info *.filtered gcov_report ./../*.log
+	@rm -f test *.gcda *.gcno *.info *.filtered gcov_report ./../*.log ../.DS_Store
 	@rm -rf ./build-view-* ./report ../.vscode ../dist ../build view/.qmake.stash
 
 tests: clean

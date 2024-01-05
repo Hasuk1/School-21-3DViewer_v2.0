@@ -1,5 +1,9 @@
 #include "viewer.h"
 
+extern "C" {
+#include "gif.h"
+}
+
 Viewer::Viewer(QWidget* parent) : QMainWindow(parent), ui_(new Ui::Viewer) {
   ui_->setupUi(this);
   setWindowTitle("3DViewer_v2.0");
@@ -242,12 +246,50 @@ void Viewer::on_background_reset_clicked() {
   SetStandarBackgroundButtonStyle();
   ui_->background_dark_gray->setStyleSheet(s);
   ui_->OGLWindow->SetBackgroundColor({27, 27, 27});
+  ui_->OGLWindow->update();
 }
 
 void Viewer::ChangeProjectionType() {
   ui_->OGLWindow->SetProjectionType(
       ui_->combo_box_projection_type->currentIndex());
   ui_->OGLWindow->update();
+}
+
+void Viewer::on_button_get_screenshot_clicked() {
+  QPixmap screenshot = ui_->OGLWindow->grab();
+  QString file_path = QFileDialog::getSaveFileName(
+      this, "Save Screenshot", "screenshot", "JPEG (*.jpeg);;BMP (*.bmp)");
+  if (!file_path.isEmpty()) {
+    if (file_path.endsWith(".bmp"))
+      screenshot.save(file_path, "BMP");
+    else
+      screenshot.save(file_path, "JPEG");
+  }
+}
+
+void Viewer::on_button_get_gif_clicked() {
+  QString file_path = QFileDialog::getSaveFileName(this, "Save Gif",
+                                                   "animation", "GIF (*.gif)");
+  if (!file_path.isEmpty()) {
+    QImage img(ui_->OGLWindow->size(), QImage::Format_RGB32), img640_480;
+    QPainter painter(&img);
+    QTime timer;
+    GifWriter gif;
+    GifBegin(&gif, file_path.toLatin1(), 640, 480, 10);
+    for (int i = 1, sec = 5; i <= 50; ++i) {
+      if (i % 10 == 0)
+        ui_->button_get_gif->setText(QString::number(sec--) + "s");
+      ui_->OGLWindow->render(&painter);
+      img640_480 = img.scaled(QSize(640, 480));
+      GifWriteFrame(&gif, img640_480.bits(), 640, 480, 10);
+      timer = QTime::currentTime().addMSecs(100);
+      while (QTime::currentTime() < timer)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
+    }
+    ui_->button_get_gif->setText("GIF");
+    GifEnd(&gif);
+    QMessageBox::information(this, "Gif ready", "Gif saved successfully.");
+  }
 }
 
 void Viewer::SaveSettings() {
