@@ -71,7 +71,6 @@ void Viewer::Transform(int value) {
     mode = s21::kScale;
   }
   if (mode != s21::kDefault) ui_->OGLWindow->TransformOBJ(mode, value, false);
-  ui_->current_obj_vertices->setText(ui_->OGLWindow->GetVertexAmount());
   ui_->OGLWindow->update();
 }
 
@@ -195,6 +194,56 @@ void Viewer::on_vertices_reset_clicked() {
   ui_->OGLWindow->update();
 }
 
+void Viewer::ChangeColorBackground() {
+  SetStandarBackgroundButtonStyle();
+  QObject* sender_button = sender();
+  QString current_style = qobject_cast<QPushButton*>(sender())->styleSheet();
+  QString border = "border:2px solid rgb(200, 249, 100);";
+  QString green_border = "border:2px solid rgb(255, 255, 255);";
+  if (sender_button == ui_->background_black) {
+    ui_->OGLWindow->SetBackgroundColor({0, 0, 0});
+  } else if (sender_button == ui_->background_blue) {
+    ui_->OGLWindow->SetBackgroundColor({66, 66, 169});
+  } else if (sender_button == ui_->background_dark_gray) {
+    ui_->OGLWindow->SetBackgroundColor({27, 27, 27});
+  } else if (sender_button == ui_->background_light_gray) {
+    ui_->OGLWindow->SetBackgroundColor({102, 102, 102});
+  } else if (sender_button == ui_->background_green) {
+    ui_->OGLWindow->SetBackgroundColor({190, 249, 81});
+  } else if (sender_button == ui_->background_pink) {
+    ui_->OGLWindow->SetBackgroundColor({245, 215, 255});
+  } else if (sender_button == ui_->background_white) {
+    ui_->OGLWindow->SetBackgroundColor({255, 255, 255});
+  }
+  if (sender_button == ui_->background_green)
+    qobject_cast<QPushButton*>(sender())->setStyleSheet(current_style +
+                                                        green_border);
+  else
+    qobject_cast<QPushButton*>(sender())->setStyleSheet(current_style + border);
+  ui_->OGLWindow->update();
+}
+
+void Viewer::SetStandarBackgroundButtonStyle() {
+  QString start = "background-color:rgb(";
+  QString end = ");border-radius:5px;";
+  ui_->background_black->setStyleSheet(start + "0,0,0" + end);
+  ui_->background_blue->setStyleSheet(start + "66,66,169" + end);
+  ui_->background_dark_gray->setStyleSheet(start + "27,27,27" + end);
+  ui_->background_light_gray->setStyleSheet(start + "102,102,102" + end);
+  ui_->background_green->setStyleSheet(start + "190,249,81" + end);
+  ui_->background_pink->setStyleSheet(start + "245,215,255" + end);
+  ui_->background_white->setStyleSheet(start + "255,255,255" + end);
+}
+
+void Viewer::on_background_reset_clicked() {
+  QString s =
+      "background-color:rgb(27,27,27);border-radius:5px;border:2px solid "
+      "rgb(200, 249, 100);";
+  SetStandarBackgroundButtonStyle();
+  ui_->background_dark_gray->setStyleSheet(s);
+  ui_->OGLWindow->SetBackgroundColor({27, 27, 27});
+}
+
 void Viewer::ChangeProjectionType() {
   ui_->OGLWindow->SetProjectionType(
       ui_->combo_box_projection_type->currentIndex());
@@ -229,6 +278,21 @@ void Viewer::SaveSettings() {
   settings_->setValue("vertices_blue", ui_->vertices_blue->styleSheet());
   settings_->setValue("vertices_purple", ui_->vertices_purple->styleSheet());
   settings_->setValue("vertices_white", ui_->vertices_white->styleSheet());
+  settings_->setValue("background_rgb_red",
+                      current_settings.background_rgb.red);
+  settings_->setValue("background_rgb_green",
+                      current_settings.background_rgb.green);
+  settings_->setValue("background_rgb_blue",
+                      current_settings.background_rgb.blue);
+  settings_->setValue("background_black", ui_->background_black->styleSheet());
+  settings_->setValue("background_blue", ui_->background_blue->styleSheet());
+  settings_->setValue("background_dark_gray",
+                      ui_->background_dark_gray->styleSheet());
+  settings_->setValue("background_light_gray",
+                      ui_->background_light_gray->styleSheet());
+  settings_->setValue("background_green", ui_->background_green->styleSheet());
+  settings_->setValue("background_pink", ui_->background_pink->styleSheet());
+  settings_->setValue("background_white", ui_->background_white->styleSheet());
   settings_->setValue("projection_type", current_settings.projection_type);
 }
 
@@ -276,6 +340,27 @@ void Viewer::LoadSettings() {
     ui_->vertices_type->setCurrentIndex(s.vertices_type);
     s.vertices_size = settings_->value("vertices_size").toDouble();
     ui_->vertices_thickness->setValue(s.vertices_size);
+    s.background_rgb.red =
+        settings_->value("background_rgb_red").toFloat() * 255;
+    s.background_rgb.green =
+        settings_->value("background_rgb_green").toFloat() * 255;
+    s.background_rgb.blue =
+        settings_->value("background_rgb_blue").toFloat() * 255;
+    ui_->OGLWindow->SetBackgroundColor(s.background_rgb);
+    ui_->background_black->setStyleSheet(
+        settings_->value("background_black").toString());
+    ui_->background_blue->setStyleSheet(
+        settings_->value("background_blue").toString());
+    ui_->background_dark_gray->setStyleSheet(
+        settings_->value("background_dark_gray").toString());
+    ui_->background_light_gray->setStyleSheet(
+        settings_->value("background_light_gray").toString());
+    ui_->background_green->setStyleSheet(
+        settings_->value("background_green").toString());
+    ui_->background_pink->setStyleSheet(
+        settings_->value("background_pink").toString());
+    ui_->background_white->setStyleSheet(
+        settings_->value("background_white").toString());
     s.projection_type = settings_->value("projection_type").toInt();
     ui_->combo_box_projection_type->setCurrentIndex(s.projection_type);
     ui_->OGLWindow->SetProjectionType(s.projection_type);
@@ -367,6 +452,20 @@ void Viewer::InitializeConnect() {
           &Viewer::ChangeTypeVertices);
   connect(ui_->vertices_thickness, &QSlider::valueChanged, this,
           &Viewer::ChangeThicknessVertices);
+  connect(ui_->background_black, &QPushButton::clicked, this,
+          &Viewer::ChangeColorBackground);
+  connect(ui_->background_blue, &QPushButton::clicked, this,
+          &Viewer::ChangeColorBackground);
+  connect(ui_->background_dark_gray, &QPushButton::clicked, this,
+          &Viewer::ChangeColorBackground);
+  connect(ui_->background_light_gray, &QPushButton::clicked, this,
+          &Viewer::ChangeColorBackground);
+  connect(ui_->background_green, &QPushButton::clicked, this,
+          &Viewer::ChangeColorBackground);
+  connect(ui_->background_pink, &QPushButton::clicked, this,
+          &Viewer::ChangeColorBackground);
+  connect(ui_->background_white, &QPushButton::clicked, this,
+          &Viewer::ChangeColorBackground);
   connect(ui_->combo_box_projection_type,
           QOverload<int>::of(&QComboBox::currentIndexChanged), this,
           &Viewer::ChangeProjectionType);
