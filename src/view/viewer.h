@@ -48,5 +48,7 @@ class Viewer : public QMainWindow {
   void on_edges_reset_clicked();
   void on_vertices_reset_clicked();
   void on_background_reset_clicked();
+  void on_button_get_screenshot_clicked();
+  void on_button_get_gif_clicked();
 };
 #endif  // CPP4_3DVIEWER_V2_SRC_VIEWER_H_
