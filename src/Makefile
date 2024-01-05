@@ -19,7 +19,7 @@ install: uninstall
 	@cd ./view && qmake && make && make clean && rm -rf Makefile  && mv $(TARGET).app ../../build
 	@cp -R ../build/$(TARGET).app ~/Desktop/$(TARGET).app
 	@clear
-	@echo "===> SmartCalc application installed <==="
+	@echo "===> 3DViewer_v2.0 application installed <==="
 	@echo "Do you want to open application? [yes/no]"
 	@read -r ANSWER; \
 	if [ "$ANSWER" == "yes" ] || [ "$$ANSWER" == "y" ]; then \
@@ -36,7 +36,7 @@ uninstall:
 
 clean:
 	@rm -f test *.gcda *.gcno *.info *.filtered gcov_report ./../*.log
-	@rm -rf ./build-view-* ./report ../.vscode ../dist
+	@rm -rf ./build-view-* ./report ../.vscode ../dist ../build view/.qmake.stash
 
 tests: clean
 	@$(CC) $(CHECKFLAGS) $(SRC) -o test $(CPPFLAGS) && ./test

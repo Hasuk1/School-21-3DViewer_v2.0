@@ -53,6 +53,7 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   void SetVerticesColor(s21::ColorRGB vertices_rgb);
   void SetVerticesType(int value);
   void SetVerticesSize(int value);
+  void SetBackgroundColor(s21::ColorRGB background_rgb);
   void SetProjectionType(int value);
   s21::Settings GetSettings();
   QString GetVertexAmount();
@@ -61,7 +62,6 @@ class MyOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
 
  private:
   ~MyOpenGLWidget() override;
-
   void BuildLines();
   void BuildPoints();
   void MoveOBJ(s21::Mode mode, double value, bool is_click);

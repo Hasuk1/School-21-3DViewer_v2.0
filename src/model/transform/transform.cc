@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <thread>
-#include <mutex>
 
 namespace s21 {
 void MoveX::TransformModel(std::vector<double> &vertex, const unsigned start,
@@ -61,23 +60,20 @@ void Scale::TransformModel(std::vector<double> &vertex, const unsigned start,
 void Client::SetStrategy(Strategy *v) { operation = v; }
 
 void Client::Transform(std::vector<double> &vertex, const double k) {
- unsigned numbers_of_threads = std::thread::hardware_concurrency()/2;
- unsigned start = vertex.size() / numbers_of_threads;
- while (start % 3 != 0) ++start;
- std::thread threads[numbers_of_threads];
- std::mutex mtx;
- for (unsigned i = 0; i < numbers_of_threads; ++i) {
+  unsigned numbers_of_threads = std::thread::hardware_concurrency();
+  unsigned start = vertex.size() / numbers_of_threads;
+  while (start % 3 != 0) ++start;
+  std::thread threads[numbers_of_threads];
+  for (unsigned i = 0; i < numbers_of_threads; ++i) {
     unsigned start_index = i * start;
     unsigned end_index =
         i == (numbers_of_threads - 1) ? vertex.size() : (i + 1) * start;
-    threads[i] = std::thread([this, &vertex, start_index, end_index, k, &mtx]() {
-      mtx.lock();
+    threads[i] = std::thread([this, &vertex, start_index, end_index, k]() {
       operation->TransformModel(vertex, start_index, end_index, k);
-      mtx.unlock();
     });
- }
- for (unsigned i = 0; i < numbers_of_threads; ++i) {
+  }
+  for (unsigned i = 0; i < numbers_of_threads; ++i) {
     threads[i].join();
- }
+  }
 }
 }  // namespace s21

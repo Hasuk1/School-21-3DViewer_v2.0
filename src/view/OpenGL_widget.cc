@@ -4,6 +4,7 @@ MyOpenGLWidget::MyOpenGLWidget(QWidget *parent) : QOpenGLWidget{parent} {}
 
 MyOpenGLWidget::~MyOpenGLWidget() {
   verteces_.clear();
+  verteces_copy_.clear();
   edges_.clear();
 }
 
@@ -99,10 +100,6 @@ void MyOpenGLWidget::CloseObject() {
   update();
 }
 
-void MyOpenGLWidget::SetProjectionType(int value) {
-  settings_.projection_type = value;
-}
-
 void MyOpenGLWidget::SetEdgesColor(s21::ColorRGB edges_rgb) {
   settings_.edges_rgb.red = edges_rgb.red / 255;
   settings_.edges_rgb.blue = edges_rgb.blue / 255;
@@ -127,6 +124,16 @@ void MyOpenGLWidget::SetVerticesType(int value) {
 
 void MyOpenGLWidget::SetVerticesSize(int value) {
   settings_.vertices_size = value;
+}
+
+void MyOpenGLWidget::SetBackgroundColor(s21::ColorRGB background_rgb) {
+  settings_.background_rgb.red = background_rgb.red / 255;
+  settings_.background_rgb.blue = background_rgb.blue / 255;
+  settings_.background_rgb.green = background_rgb.green / 255;
+}
+
+void MyOpenGLWidget::SetProjectionType(int value) {
+  settings_.projection_type = value;
 }
 
 s21::Settings MyOpenGLWidget::GetSettings() { return settings_; }
@@ -197,12 +204,15 @@ void MyOpenGLWidget::BuildLines() {
   if (settings_.edges_type == 1) {
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0x00FF);
-  }
+  } else
+    glDisable(GL_LINE_STIPPLE);
   glLineWidth(settings_.edges_thickness);
   glColor3f(settings_.edges_rgb.red, settings_.edges_rgb.green,
             settings_.edges_rgb.blue);
-  glDrawElements(GL_LINES, edges_.size(), GL_UNSIGNED_INT, edges_.data());
-  if (settings_.edges_type == 1) glDisable(GL_LINE_STIPPLE);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glDrawElements(GL_LINES, static_cast<GLsizei>(edges_.size()), GL_UNSIGNED_INT,
+                 edges_.data());
+  glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 void MyOpenGLWidget::BuildPoints() {
@@ -210,6 +220,9 @@ void MyOpenGLWidget::BuildPoints() {
   glPointSize(settings_.vertices_size);
   glColor3f(settings_.vertices_rgb.red, settings_.vertices_rgb.green,
             settings_.vertices_rgb.blue);
-  glDrawArrays(GL_POINTS, 0, verteces_.size());
+  glVertexPointer(3, GL_DOUBLE, 0, verteces_.data());
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glDrawArrays(GL_POINTS, 0, static_cast<GLsizei>(verteces_.size() / 3));
+  glDisableClientState(GL_VERTEX_ARRAY);
   if (settings_.vertices_type == 1) glDisable(GL_POINT_SMOOTH);
 }
