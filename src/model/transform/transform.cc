@@ -66,11 +66,13 @@ void Client::Transform(std::vector<double> &vertex, const double k) {
   unsigned start = vertex.size() / numbers_of_threads;
   while (start % 3 != 0) ++start;
   std::thread threads[numbers_of_threads];
+  std::mutex mutex;
   for (unsigned i = 0; i < numbers_of_threads; ++i) {
     unsigned start_index = i * start;
     unsigned end_index =
         i == (numbers_of_threads - 1) ? vertex.size() : (i + 1) * start;
-    threads[i] = std::thread([this, &vertex, start_index, end_index, k]() {
+    threads[i] = std::thread([this, &vertex, start_index, end_index, k, &mutex]() {
+       std::lock_guard<std::mutex> lock(mutex);
       operation->TransformModel(vertex, start_index, end_index, k);
     });
   }
