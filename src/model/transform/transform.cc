@@ -1,6 +1,7 @@
 #include "transform.h"
 
 #include <cmath>
+#include <mutex>
 #include <thread>
 
 namespace s21 {
@@ -60,7 +61,8 @@ void Scale::TransformModel(std::vector<double> &vertex, const unsigned start,
 void Client::SetStrategy(Strategy *v) { operation = v; }
 
 void Client::Transform(std::vector<double> &vertex, const double k) {
-  unsigned numbers_of_threads = std::thread::hardware_concurrency();
+  unsigned numbers_of_threads = std::thread::hardware_concurrency() / 2;
+  if (numbers_of_threads == 0) numbers_of_threads = 1;
   unsigned start = vertex.size() / numbers_of_threads;
   while (start % 3 != 0) ++start;
   std::thread threads[numbers_of_threads];

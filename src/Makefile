@@ -29,7 +29,7 @@ install: uninstall
 
 open:
 	@echo "Opening application..."	
-	@$(OPEN_CMD) ../build/$(TARGET).app
+	@$(OPEN_CMD) ~/Desktop/$(TARGET).app
 
 uninstall:
 	@rm -rf ./../build ./out
@@ -54,8 +54,8 @@ dist:
 gcov_report: clean
 	@$(CC) --coverage $(SRC) ${CPPFLAGS} ${CHECKFLAGS} ${LIBS} -o gcov_report
 	@./gcov_report
-	@lcov -c -d . -o coverage.info -t "all_check"
-	@lcov -e coverage.info 'model/parser/*.cc' 'model/transform/*.cc' -o coverage.info.filtered
+	@lcov -c -d . -o coverage.info --rc lcov_branch_coverage=1 --ignore-errors mismatch -t "all_check"
+	@lcov --rc lcov_branch_coverage=1 -e coverage.info 'model/*.cc' -o coverage.info.filtered
 	@genhtml coverage.info.filtered --output-directory report
 	@$(OPEN_CMD) report/index.html;
 
