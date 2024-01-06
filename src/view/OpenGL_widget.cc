@@ -48,18 +48,15 @@ void MyOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
   if (event->buttons() & Qt::RightButton) {
     TransformOBJ(s21::kMoveX, new_pos_.x() * normalize_coef_ / 5120, true);
     TransformOBJ(s21::kMoveY, -new_pos_.y() * normalize_coef_ / 5120, true);
-    update();
   } else if (event->buttons() & Qt::LeftButton) {
     TransformOBJ(s21::kRotateX, -new_pos_.y() * 0.01, true);
     TransformOBJ(s21::kRotateY, new_pos_.x() * 0.01, true);
-    update();
   }
 }
 
 void MyOpenGLWidget::wheelEvent(QWheelEvent *event) {
   QPoint numDegrees = event->angleDelta() / 120;
   TransformOBJ(s21::kScale, numDegrees.y() * normalize_coef_ / 5, true);
-  update();
 }
 
 void MyOpenGLWidget::ParseFile(QString path_to_file) {
@@ -90,14 +87,20 @@ void MyOpenGLWidget::ParseFile(QString path_to_file) {
 void MyOpenGLWidget::ReRender() {
   verteces_.clear();
   verteces_ = verteces_copy_;
+  scale_val_ = 50;
+  translate_x_ = translate_y_ = translate_z_ = 0;
+  rotate_x_ = rotate_y_ = rotate_z_ = 0;
   update();
 }
 
 void MyOpenGLWidget::CloseObject() {
   verteces_.clear();
   edges_.clear();
+  verteces_copy_.clear();
   normalize_coef_ = -10;
-  update();
+  scale_val_ = 50;
+  translate_x_ = translate_y_ = translate_z_ = 0;
+  rotate_x_ = rotate_y_ = rotate_z_ = 0;
 }
 
 void MyOpenGLWidget::SetEdgesColor(s21::ColorRGB edges_rgb) {
@@ -198,6 +201,7 @@ void MyOpenGLWidget::TransformOBJ(s21::Mode mode, double value, bool is_click) {
   } else if (mode == s21::kScale) {
     ScaleOBJ(value, is_click);
   }
+  update();
 }
 
 void MyOpenGLWidget::BuildLines() {

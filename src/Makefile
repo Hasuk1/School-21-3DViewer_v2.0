@@ -1,7 +1,8 @@
 CC := g++
 CPPFLAGS := -lgtest -lgtest_main -std=c++17 -pthread
 CHECKFLAGS := -Wall -Werror -Wextra
-SRC := model/*.cc tests/*.cc
+LIBS := -fprofile-arcs -ftest-coverage
+SRC := model/parser/file_parser.cc model/transform/transform.cc tests/tests.cc
 OS := $(shell uname)
 ifeq ($(OS), Darwin)
 	OPEN_CMD := open
@@ -53,18 +54,18 @@ dist:
 gcov_report: clean
 	@$(CC) --coverage $(SRC) ${CPPFLAGS} ${CHECKFLAGS} ${LIBS} -o gcov_report
 	@./gcov_report
-	@lcov -c -d . -o coverage.info --rc lcov_branch_coverage=1 --ignore-errors mismatch -t "all_check"
-	@lcov --rc lcov_branch_coverage=1 -e coverage.info 'model/*.cc' 'tests/test.cc' -o coverage.info.filtered
+	@lcov -c -d . -o coverage.info -t "all_check"
+	@lcov -e coverage.info 'model/parser/*.cc' 'model/transform/*.cc' -o coverage.info.filtered
 	@genhtml coverage.info.filtered --output-directory report
 	@$(OPEN_CMD) report/index.html;
 
 clang:
 	@echo "===> Formatting your code for Google Style <==="
-	@clang-format -i -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui controller/*.h
+	@clang-format -i -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui controller/*.h tests/*.cc
 
 style:
 	@echo "===> Checking your code for Google Style <==="
-	@clang-format -n -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui controller/*.h
+	@clang-format -n -style=GOOGLE model/parser/* model/transform/* model/*.h view/*.cc view/*.h view/*.ui controller/*.h tests/*.cc
 
 leaks:
 	@if [ "$(OS)" = "Darwin" ]; then \
@@ -75,12 +76,12 @@ leaks:
 	fi
 
 valgrind:
-	if [ "$(OS)" = "Darwin" ]; then \
+	@if [ "$(OS)" = "Darwin" ]; then \
 		docker build . -t 3d_viewer:2.0 -f ./Dockerfile; \
 		docker run --rm -it --entrypoint "" --name 3d_viewer_test 3d_viewer:2.0 make valgrind; \
 	elif [ "$(OS)" = "Linux" ]; then \
 		make clean && make tests; \
-		CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./test; \
+		CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all -s --track-origins=yes --verbose ./test; \
 	fi
 	
 docker:
