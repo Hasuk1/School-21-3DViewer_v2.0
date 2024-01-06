@@ -16,9 +16,9 @@ class ViewerModelTest : public ::testing::Test {
 
   void TearDown() override { controller_->ClearObjData(); }
 
-  std::vector<double> kVertices_ = {0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 2.0,
-                                    0.0, 0.0, 2.0, 2.0, 2.0, 0.0, 0.0, 2.0,
-                                    0.0, 2.0, 2.0, 2.0, 0.0, 2.0, 2.0, 2.0};
+  const std::vector<double> kVertices_ = {
+      0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 2.0, 0.0, 0.0, 2.0, 2.0,
+      2.0, 0.0, 0.0, 2.0, 0.0, 2.0, 2.0, 2.0, 0.0, 2.0, 2.0, 2.0};
 
   s21::ObjController* controller_;
   std::string current_path_;
@@ -35,15 +35,12 @@ TEST_F(ViewerModelTest, parser_empty_file) {
 }
 
 TEST_F(ViewerModelTest, parser_normal) {
-  std::vector<double> vertices = {0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 2.0,
-                                  0.0, 0.0, 2.0, 2.0, 2.0, 0.0, 0.0, 2.0,
-                                  0.0, 2.0, 2.0, 2.0, 0.0, 2.0, 2.0, 2.0};
   std::vector<unsigned> edges = {0, 6, 6, 4, 4, 0, 0, 2, 2, 6, 0, 3,
                                  3, 2, 0, 1, 1, 3, 2, 7, 7, 6, 3, 7,
                                  7, 4, 7, 5, 5, 4, 5, 0, 5, 1};
   EXPECT_EQ(controller_->ParseObjFile(current_path_ + "/tests/obj/cube.obj"),
             s21::kOk);
-  EXPECT_EQ(controller_->GetObjVertex(), vertices);
+  EXPECT_EQ(controller_->GetObjVertex(), kVertices_);
   EXPECT_EQ(controller_->GetObjEdges(), edges);
   EXPECT_EQ(controller_->GetObjNormalizeCoef(), 2);
 }
