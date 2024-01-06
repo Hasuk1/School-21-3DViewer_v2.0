@@ -3,7 +3,7 @@ QT += core gui opengl openglwidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
-ICON = app_icon.png
+ICON = image/app_icon.png
 TARGET = 3DViewer_v2.0
 
 SOURCES += \
@@ -18,7 +18,7 @@ HEADERS += \
     ../model/parser/file_parser.h \
     ../model/transform/transform.h \
     OpenGL_widget.h \
-    gif.h \
+    ./include/gif.h \
     viewer.h
 
 FORMS += \

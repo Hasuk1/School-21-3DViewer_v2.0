@@ -1,7 +1,7 @@
 #include "viewer.h"
 
 extern "C" {
-#include "gif.h"
+#include "include/gif.h"
 }
 
 Viewer::Viewer(QWidget* parent) : QMainWindow(parent), ui_(new Ui::Viewer) {
@@ -48,6 +48,7 @@ void Viewer::on_render_obj_file_clicked() {
 }
 
 void Viewer::on_button_close_object_clicked() {
+  SetStandartAffine();
   ui_->OGLWindow->CloseObject();
   ui_->OGLWindow->update();
   ui_->current_obj_vertices->setText("");
@@ -75,7 +76,6 @@ void Viewer::Transform(int value) {
     mode = s21::kScale;
   }
   if (mode != s21::kDefault) ui_->OGLWindow->TransformOBJ(mode, value, false);
-  ui_->OGLWindow->update();
 }
 
 void Viewer::ChangeColorEdges() {
