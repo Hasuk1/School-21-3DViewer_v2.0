@@ -52,7 +52,7 @@ The project is implemented within the MVC pattern, where other design patterns a
 
 <div>
     <img src="https://github.com/devicons/devicon/blob/master/icons/cplusplus/cplusplus-original.svg" title="CPLUS" alt="CPLUS" width="40" height="40"/>&nbsp;
-    <img src="misc/2560px-Qt_logo_2016.svg.png" title="CPLUS" alt="CPLUS" width="40" height="30"/>&nbsp;
+    <img src="misc/qt_logo.png" title="CPLUS" alt="CPLUS" width="40" height="30"/>&nbsp;
     <img src="https://github.com/devicons/devicon/blob/master/icons/c/c-original.svg" title="C" alt="C" width="40" height="40"/>&nbsp;
     <img src="https://github.com/devicons/devicon/blob/master/icons/docker/docker-original.svg" title="docker" alt="docker" width="40" height="40"/>
 </div>

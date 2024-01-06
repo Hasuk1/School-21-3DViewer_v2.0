@@ -32,24 +32,24 @@ open:
 	@$(OPEN_CMD) ~/Desktop/$(TARGET).app
 
 uninstall:
-	@rm -rf ./../build ./out
+	@rm -rf ./../build
 	@rm -rf ~/Desktop/$(TARGET).app 
 
 clean:
 	@rm -f test *.gcda *.gcno *.info *.filtered gcov_report ./../*.log ../.DS_Store
-	@rm -rf ./build-view-* ./report ../.vscode ../dist ../build view/.qmake.stash
+	@rm -rf ./build-view-* ./report ../.vscode ../dist view/.qmake.stash
 
 tests: clean
 	@$(CC) $(CHECKFLAGS) $(SRC) -o test $(CPPFLAGS) && ./test
 
 dvi:
-	@$(OPEN_CMD) ../misc/info.html
+	@$(OPEN_CMD) ../dvi/dvi.html
 
 dist:
 	@mkdir -p ../dist
-	@cp -R ../build/$(TARGET).app ../dist && cp ../misc/info.html ../dist
+	@cp -R ../build/$(TARGET).app ../dist && cp ../dvi/dvi.html ../dist
 	@cd ../dist && tar cvzf $(TARGET).tgz *
-	@cd ../dist && rm -rf $(TARGET).app info.html
+	@cd ../dist && rm -rf $(TARGET).app dvi.html
 
 gcov_report: clean
 	@$(CC) --coverage $(SRC) ${CPPFLAGS} ${CHECKFLAGS} ${LIBS} -o gcov_report
