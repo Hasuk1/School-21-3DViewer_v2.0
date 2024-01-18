@@ -16,7 +16,7 @@ class ViewerModelTest : public ::testing::Test {
 
   void TearDown() override { controller_->ClearObjData(); }
 
-  const std::vector<double> kVertices_ = {
+  std::vector<double> vertices_ = {
       0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 2.0, 0.0, 0.0, 2.0, 2.0,
       2.0, 0.0, 0.0, 2.0, 0.0, 2.0, 2.0, 2.0, 0.0, 2.0, 2.0, 2.0};
 
@@ -40,7 +40,7 @@ TEST_F(ViewerModelTest, parser_normal) {
                                  7, 4, 7, 5, 5, 4, 5, 0, 5, 1};
   EXPECT_EQ(controller_->ParseObjFile(current_path_ + "/tests/obj/cube.obj"),
             s21::kOk);
-  EXPECT_EQ(controller_->GetObjVertex(), kVertices_);
+  EXPECT_EQ(controller_->GetObjVertex(), vertices_);
   EXPECT_EQ(controller_->GetObjEdges(), edges);
   EXPECT_EQ(controller_->GetObjNormalizeCoef(), 2);
 }
@@ -48,84 +48,84 @@ TEST_F(ViewerModelTest, parser_normal) {
 TEST_F(ViewerModelTest, affine_transformation_move_x) {
   s21::MoveX strategy;
   affine_strategy_.SetStrategy(&strategy);
-  affine_strategy_.Transform(kVertices_, 10 * 2 * 0.01);
+  affine_strategy_.Transform(vertices_, 10 * 2 * 0.01);
   std::vector<double> vertices_e = {0.2, 0, 0, 0.2, 0, 2, 0.2, 2, 0, 0.2, 2, 2,
                                     2.2, 0, 0, 2.2, 0, 2, 2.2, 2, 0, 2.2, 2, 2};
   for (size_t i = 0; i < vertices_e.size(); ++i) {
-    EXPECT_NEAR(kVertices_[i], vertices_e[i], kEpsilon);
+    EXPECT_NEAR(vertices_[i], vertices_e[i], kEpsilon);
   }
 }
 
 TEST_F(ViewerModelTest, affine_transformation_move_y) {
   s21::MoveY strategy;
   affine_strategy_.SetStrategy(&strategy);
-  affine_strategy_.Transform(kVertices_, 10 * 2 * 0.01);
+  affine_strategy_.Transform(vertices_, 10 * 2 * 0.01);
   std::vector<double> vertices_e = {0, 0.2, 0, 0, 0.2, 2, 0, 2.2, 0, 0, 2.2, 2,
                                     2, 0.2, 0, 2, 0.2, 2, 2, 2.2, 0, 2, 2.2, 2};
   for (size_t i = 0; i < vertices_e.size(); ++i) {
-    EXPECT_NEAR(kVertices_[i], vertices_e[i], kEpsilon);
+    EXPECT_NEAR(vertices_[i], vertices_e[i], kEpsilon);
   }
 }
 
 TEST_F(ViewerModelTest, affine_transformation_move_z) {
   s21::MoveZ strategy;
   affine_strategy_.SetStrategy(&strategy);
-  affine_strategy_.Transform(kVertices_, 10 * 2 * 0.01);
+  affine_strategy_.Transform(vertices_, 10 * 2 * 0.01);
   std::vector<double> vertices_e = {0, 0, 0.2, 0, 0, 2.2, 0, 2, 0.2, 0, 2, 2.2,
                                     2, 0, 0.2, 2, 0, 2.2, 2, 2, 0.2, 2, 2, 2.2};
   for (size_t i = 0; i < vertices_e.size(); ++i) {
-    EXPECT_NEAR(kVertices_[i], vertices_e[i], kEpsilon);
+    EXPECT_NEAR(vertices_[i], vertices_e[i], kEpsilon);
   }
 }
 
 TEST_F(ViewerModelTest, affine_transformation_rotate_x) {
   s21::RotateX strategy;
   affine_strategy_.SetStrategy(&strategy);
-  affine_strategy_.Transform(kVertices_, 10);
+  affine_strategy_.Transform(vertices_, 10);
   std::vector<double> vertices_e = {
       0, 0,       0,         0, 0.347296, 1.96962, 0, 1.96962,  -0.347296,
       0, 2.31691, 1.62232,   2, 0,        0,       2, 0.347296, 1.96962,
       2, 1.96962, -0.347296, 2, 2.31691,  1.62232};
 
   for (size_t i = 0; i < vertices_e.size(); ++i) {
-    EXPECT_NEAR(kVertices_[i], vertices_e[i], kEpsilon);
+    EXPECT_NEAR(vertices_[i], vertices_e[i], kEpsilon);
   }
 }
 
 TEST_F(ViewerModelTest, affine_transformation_rotate_y) {
   s21::RotateY strategy;
   affine_strategy_.SetStrategy(&strategy);
-  affine_strategy_.Transform(kVertices_, 10);
+  affine_strategy_.Transform(vertices_, 10);
   std::vector<double> vertices_e = {
       0, 0,        0,       0.347296, 0,         1.96962, 0,         2,
       0, 0.347296, 2,       1.96962,  1.96962,   0,       -0.347296, 2.31691,
       0, 1.62232,  1.96962, 2,        -0.347296, 2.31691, 2,         1.62232};
   for (size_t i = 0; i < vertices_e.size(); ++i) {
-    EXPECT_NEAR(kVertices_[i], vertices_e[i], kEpsilon);
+    EXPECT_NEAR(vertices_[i], vertices_e[i], kEpsilon);
   }
 }
 
 TEST_F(ViewerModelTest, affine_transformation_rotate_z) {
   s21::RotateZ strategy;
   affine_strategy_.SetStrategy(&strategy);
-  affine_strategy_.Transform(kVertices_, 10);
+  affine_strategy_.Transform(vertices_, 10);
   std::vector<double> vertices_e = {
       0,        0,       0, 0,       0,         2, 0.347296, 1.96962,   0,
       0.347296, 1.96962, 2, 1.96962, -0.347296, 0, 1.96962,  -0.347296, 2,
       2.31691,  1.62232, 0, 2.31691, 1.62232,   2};
   for (size_t i = 0; i < vertices_e.size(); ++i) {
-    EXPECT_NEAR(kVertices_[i], vertices_e[i], kEpsilon);
+    EXPECT_NEAR(vertices_[i], vertices_e[i], kEpsilon);
   }
 }
 
 TEST_F(ViewerModelTest, affine_transformation_scale) {
   s21::Scale strategy;
   affine_strategy_.SetStrategy(&strategy);
-  affine_strategy_.Transform(kVertices_, 10);
+  affine_strategy_.Transform(vertices_, 10);
   std::vector<double> vertices_e = {0,  0, 0, 0,  0, 20, 0,  20, 0, 0,  20, 20,
                                     20, 0, 0, 20, 0, 20, 20, 20, 0, 20, 20, 20};
   for (size_t i = 0; i < vertices_e.size(); ++i) {
-    EXPECT_NEAR(kVertices_[i], vertices_e[i], kEpsilon);
+    EXPECT_NEAR(vertices_[i], vertices_e[i], kEpsilon);
   }
 }
 
