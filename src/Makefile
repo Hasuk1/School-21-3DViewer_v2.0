@@ -88,4 +88,8 @@ docker:
 	@docker build . -t 3d_viewer:2.0 -f ./Dockerfile
 	@docker run --rm -it --name 3d_viewer_test -v $(PWD):/home/3d_viewer 3d_viewer:2.0
 
+download_obj:
+	@git clone git@github.com:Hasuk1/obj_files.git
+	@mv obj_files ~/Downloads
+
 .PHONY: install open uninstall clean tests dvi dist gcov_report clang style
