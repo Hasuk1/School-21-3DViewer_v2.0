@@ -120,7 +120,7 @@ Status ObjParser::ParseFace(const std::string &data) {
     } catch (const std::out_of_range &e) {
       return kErrorIncorrectFile;
     }
-    if (index > static_cast<long>(verteces_.size())) return kErrorIncorrectFile;
+    if (std::abs(index) > static_cast<long>(verteces_.size())) return kErrorIncorrectFile;
     if (index < 0)
       index += verteces_count_;
     else
