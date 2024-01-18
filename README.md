@@ -60,7 +60,7 @@ The project is implemented within the MVC pattern, where other design patterns a
 ## **Installation**
 
 ```shell
-git https://github.com/Hasuk1/School-21-3DViewer_v2.0.git
+git clone https://github.com/Hasuk1/School-21-3DViewer_v2.0.git
 cd School-21-3DViewer_v2.0/src
 make install
 ```
